@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.leotalleceven.bibliotheque.controller.BibiloMainController">
+    <Button layoutX="31.0" layoutY="24.0" mnemonicParsing="false" text="Back" />
+   <Button onAction="#CreateClient" layoutX="126.0" layoutY="175.0" mnemonicParsing="false" text="Create Client" />
+   <Button onAction="#CreateRessource" layoutX="380.0" layoutY="175.0" mnemonicParsing="false" text="Create Ressources" />
+   <Button onAction="#MailLatecomer"  layoutX="274.0" layoutY="261.0" mnemonicParsing="false" text="Mail Latecomer" />
+    <Button fx:id="btn_Back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClientButtonBack" text="Back" />
+
+
+</AnchorPane>
