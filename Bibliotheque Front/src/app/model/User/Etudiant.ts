@@ -1,5 +1,7 @@
 import { Particulier } from './Particulier';
+import { Departement } from './Departement';
 
 export interface Etudiant extends Particulier {
-  anne_universitaire: number;
+  numeroEtudiant?: string;
+  departement?: Departement;
 }

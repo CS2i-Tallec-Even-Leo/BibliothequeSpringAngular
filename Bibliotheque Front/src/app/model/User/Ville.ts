@@ -1,4 +1,4 @@
 export interface Ville {
-  code_ville: number;
-  ville: string;
+  id?: number;
+  nom: string;
 }

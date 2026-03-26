@@ -1,6 +1,6 @@
 export interface Ressource {
-  id: number;
+  id?: number;
   titre: string;
   caution: number;
-  code_barre: number;
+  codeBarre: string;
 }

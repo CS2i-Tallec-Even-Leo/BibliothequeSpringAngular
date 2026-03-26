@@ -1,8 +1,9 @@
 export interface Stockage {
-  nombre_total: number;
+  id?: number;
+  nombreTotal: number;
   restant: number;
-  numero_trave: string;
-  numero_etagere: string;
+  numeroTrave: string;
+  numeroEtagere: string;
   niveau: string;
   categorie: string;
 }

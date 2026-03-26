@@ -1,4 +1,9 @@
+import { Ressource } from './Ressource';
+
 export interface Exemplaire {
-  numero_exemplaire: number;
+  id?: number;
+  numeroExemplaire: string;
   etat: string;
+  ressource?: Ressource;
+  dateAcquisition?: string;
 }

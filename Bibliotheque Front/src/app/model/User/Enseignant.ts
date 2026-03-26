@@ -1,5 +1,7 @@
 import { Particulier } from './Particulier';
+import { Departement } from './Departement';
 
 export interface Enseignant extends Particulier {
-  code_departement: number;
+  specialite?: string;
+  departement?: Departement;
 }

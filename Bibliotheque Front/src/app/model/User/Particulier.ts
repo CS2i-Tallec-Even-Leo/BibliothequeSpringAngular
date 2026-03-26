@@ -1,8 +1,12 @@
+import { Ville } from './Ville';
+
 export interface Particulier {
   id: number;
   nom: string;
   prenom: string;
+  email: string;
+  telephone: string;
   adresse: string;
-  code_ville: number;
-  caution: number;
+  dateInscription: Date;
+  ville?: Ville;
 }

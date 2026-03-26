@@ -1,4 +1,4 @@
 export interface Departement {
-  code: number;
+  id?: number;
   nom: string;
 }

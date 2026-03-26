@@ -1,1 +1,111 @@
-<p>list-ressources works!</p>
+<div class="list-ressources-container">
+  <h2>Gestion des Ressources</h2>
+
+  <div class="tabs">
+    <button
+      (click)="switchTab('livres')"
+      [class.active]="activeTab === 'livres'"
+      class="tab-btn"
+    >
+      Livres ({{ livres.length }})
+    </button>
+    <button
+      (click)="switchTab('revues')"
+      [class.active]="activeTab === 'revues'"
+      class="tab-btn"
+    >
+      Revues ({{ revues.length }})
+    </button>
+    <button
+      (click)="switchTab('auteurs')"
+      [class.active]="activeTab === 'auteurs'"
+      class="tab-btn"
+    >
+      Auteurs ({{ auteurs.length }})
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <!-- Livres -->
+  <div *ngIf="activeTab === 'livres' && !loading" class="table-container">
+    <table *ngIf="livres.length > 0; else noLivres">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>ISBN</th>
+          <th>Auteur</th>
+          <th>Genre</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let livre of livres">
+          <td>{{ livre.titre }}</td>
+          <td>{{ livre.isbn }}</td>
+          <td>{{ livre.auteur?.nom }} {{ livre.auteur?.prenom }}</td>
+          <td>{{ livre.genre }}</td>
+          <td>
+            <button (click)="deleteLivre(livre.id)" class="btn btn-danger btn-sm">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noLivres>
+      <p class="no-data">Aucun livre</p>
+    </ng-template>
+  </div>
+
+  <!-- Revues -->
+  <div *ngIf="activeTab === 'revues' && !loading" class="table-container">
+    <table *ngIf="revues.length > 0; else noRevues">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Numéro</th>
+          <th>Caution</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let revue of revues">
+          <td>{{ revue.titre }}</td>
+          <td>{{ revue.numero }}</td>
+          <td>{{ revue.caution }}</td>
+          <td>
+            <button (click)="deleteRevue(revue.id)" class="btn btn-danger btn-sm">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noRevues>
+      <p class="no-data">Aucune revue</p>
+    </ng-template>
+  </div>
+
+  <!-- Auteurs -->
+  <div *ngIf="activeTab === 'auteurs' && !loading" class="table-container">
+    <table *ngIf="auteurs.length > 0; else noAuteurs">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let auteur of auteurs">
+          <td>{{ auteur.nom }}</td>
+          <td>{{ auteur.prenom }}</td>
+          <td>
+            <button (click)="deleteAuteur(auteur.id)" class="btn btn-danger btn-sm">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noAuteurs>
+      <p class="no-data">Aucun auteur</p>
+    </ng-template>
+  </div>
+</div>
