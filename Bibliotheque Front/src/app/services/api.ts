@@ -20,7 +20,7 @@ import { Emprunt } from '../model/Emprunt';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = '/api';
 
   constructor(private http: HttpClient) {}
 
@@ -56,6 +56,21 @@ export class ApiService {
 
   createLivre(livre: Livre): Observable<Livre> {
     return this.http.post<Livre>(`${this.apiUrl}/livres`, livre);
+  }
+
+  searchLivres(filters: {
+    nomOuvrage?: string;
+    auteur?: string;
+    anneePublication?: number;
+    theme?: string;
+  }): Observable<Livre[]> {
+    const params = new URLSearchParams();
+    if (filters.nomOuvrage) params.set('nomOuvrage', filters.nomOuvrage);
+    if (filters.auteur) params.set('auteur', filters.auteur);
+    if (filters.anneePublication) params.set('anneePublication', String(filters.anneePublication));
+    if (filters.theme) params.set('theme', filters.theme);
+    const query = params.toString();
+    return this.http.get<Livre[]>(`${this.apiUrl}/livres/recherche${query ? `?${query}` : ''}`);
   }
 
   updateLivre(id: number, livre: Livre): Observable<Livre> {
@@ -111,6 +126,25 @@ export class ApiService {
   // ============ EMPRUNTS ============
   getEmprunts(): Observable<Emprunt[]> {
     return this.http.get<Emprunt[]>(`${this.apiUrl}/emprunts`);
+  }
+
+  getEmpruntsByUtilisateur(particulierId: number): Observable<Emprunt[]> {
+    return this.http.get<Emprunt[]>(`${this.apiUrl}/emprunts/utilisateur/${particulierId}`);
+  }
+
+  getEmpruntsRetard(): Observable<Emprunt[]> {
+    return this.http.get<Emprunt[]>(`${this.apiUrl}/emprunts/retards`);
+  }
+
+  notifierRetards(): Observable<{ retards: number; notificationsEnvoyees: number; mode: string }> {
+    return this.http.post<{ retards: number; notificationsEnvoyees: number; mode: string }>(
+      `${this.apiUrl}/emprunts/retards/notifier`,
+      {},
+    );
+  }
+
+  enregistrerRetour(id: number): Observable<Emprunt> {
+    return this.http.post<Emprunt>(`${this.apiUrl}/emprunts/${id}/retour`, {});
   }
 
   getEmprunt(id: number): Observable<Emprunt> {
@@ -253,5 +287,32 @@ export class ApiService {
 
   deleteVille(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/villes/${id}`);
+  }
+
+  // ============ AUTHENTIFICATION ============
+  loginUtilisateur(payload: { nom: string; prenom: string }): Observable<{
+    id: number;
+    nom: string;
+    prenom: string;
+    email?: string;
+    type: string;
+  }> {
+    return this.http.post<{
+      id: number;
+      nom: string;
+      prenom: string;
+      email?: string;
+      type: string;
+    }>(`${this.apiUrl}/auth/user-login`, payload);
+  }
+
+  loginAdmin(payload: {
+    email: string;
+    password: string;
+  }): Observable<{ email: string; role: string }> {
+    return this.http.post<{ email: string; role: string }>(
+      `${this.apiUrl}/auth/admin-login`,
+      payload,
+    );
   }
 }

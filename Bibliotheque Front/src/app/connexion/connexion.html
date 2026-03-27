@@ -1,39 +1,39 @@
 <div class="connexion-container">
   <div class="connexion-card">
     <h2>Connexion Utilisateur</h2>
-    
+
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="nom">Nom:</label>
         <input
-          type="email"
-          id="email"
-          [(ngModel)]="email"
-          name="email"
+          type="text"
+          id="nom"
+          [(ngModel)]="nom"
+          name="nom"
           required
-          placeholder="Entrez votre email"
+          placeholder="Entrez votre nom"
         />
       </div>
-      
+
       <div class="form-group">
-        <label for="password">Mot de passe:</label>
+        <label for="prenom">Prenom:</label>
         <input
-          type="password"
-          id="password"
-          [(ngModel)]="password"
-          name="password"
+          type="text"
+          id="prenom"
+          [(ngModel)]="prenom"
+          name="prenom"
           required
-          placeholder="Entrez votre mot de passe"
+          placeholder="Entrez votre prenom"
         />
       </div>
-      
+
       <div *ngIf="error" class="error-message">{{ error }}</div>
-      
+
       <button type="submit" [disabled]="loading" class="btn btn-primary">
         {{ loading ? 'Connexion en cours...' : 'Se connecter' }}
       </button>
     </form>
-    
+
     <p class="connexion-link">
       Administrateur? <a routerLink="/connexion-admin">Se connecter en tant qu'admin</a>
     </p>

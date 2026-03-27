@@ -1,0 +1,125 @@
+<div class="emprunt-container">
+  <div class="header-row">
+    <h2>Emprunter une ressource</h2>
+    <a routerLink="/home" class="btn btn-secondary btn-sm">Retour accueil</a>
+  </div>
+
+  <p *ngIf="connectedUser" class="mb-2">
+    Connecte en tant que: <strong>{{ connectedUser.nom }} {{ connectedUser.prenom }}</strong> ({{
+      connectedUser.type
+    }})
+  </p>
+
+  <div
+    *ngIf="loading"
+    class="d-flex align-items-center gap-2 py-3"
+    role="status"
+    aria-live="polite"
+  >
+    <div class="spinner-border text-primary spinner-border-sm" aria-hidden="true"></div>
+    <span>Chargement des donnees...</span>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger" role="alert">{{ error }}</div>
+  <div *ngIf="success" class="alert alert-success" role="status">{{ success }}</div>
+
+  <section *ngIf="!loading" class="emprunt-form mb-3">
+    <h3>Recherche d'ouvrages</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="nomOuvrage">Recherche simple: nom de l'ouvrage</label>
+        <input id="nomOuvrage" name="nomOuvrage" type="text" [(ngModel)]="search.nomOuvrage" />
+      </div>
+      <div class="form-group">
+        <label for="auteur">Auteur</label>
+        <input id="auteur" name="auteur" type="text" [(ngModel)]="search.auteur" />
+      </div>
+      <div class="form-group">
+        <label for="anneePublication">Annee de publication</label>
+        <input
+          id="anneePublication"
+          name="anneePublication"
+          type="number"
+          [(ngModel)]="search.anneePublication"
+        />
+      </div>
+      <div class="form-group">
+        <label for="theme">Theme (roman, policier...)</label>
+        <input id="theme" name="theme" type="text" [(ngModel)]="search.theme" />
+      </div>
+    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="clearSearch()">
+      Reinitialiser la recherche
+    </button>
+  </section>
+
+  <form *ngIf="!loading" (ngSubmit)="onSubmit()" class="emprunt-form">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="exemplaire">Exemplaire</label>
+        <select id="exemplaire" name="exemplaire" [(ngModel)]="form.exemplaireId" required>
+          <option [ngValue]="null">Selectionner un exemplaire</option>
+          <option
+            *ngFor="let exemplaire of filteredExemplaires"
+            [ngValue]="exemplaire.id"
+            [disabled]="isExemplaireBorrowed(exemplaire.id)"
+          >
+            {{ formatExemplaire(exemplaire) }}
+            {{ isExemplaireBorrowed(exemplaire.id) ? ' - indisponible' : '' }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dateEmprunt">Date emprunt</label>
+        <input
+          id="dateEmprunt"
+          name="dateEmprunt"
+          type="date"
+          [(ngModel)]="form.dateEmprunt"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="submitting" class="btn btn-primary">
+        {{ submitting ? 'Enregistrement...' : 'Emprunter' }}
+      </button>
+      <a routerLink="/list-ressources" class="btn btn-outline-primary">Voir les ressources</a>
+    </div>
+  </form>
+
+  <div *ngIf="!loading" class="table-wrapper">
+    <h3>Mes emprunts (historique complet) - {{ emprunts.length }}</h3>
+
+    <table *ngIf="emprunts.length > 0; else noEmprunts">
+      <thead>
+        <tr>
+          <th>Utilisateur</th>
+          <th>Exemplaire</th>
+          <th>Date emprunt</th>
+          <th>Date retour prevue</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emprunt of emprunts">
+          <td>{{ formatParticulier(emprunt.particulier) }}</td>
+          <td>{{ formatExemplaire(emprunt.exemplaire) }}</td>
+          <td>{{ emprunt.dateEmprunt }}</td>
+          <td>{{ emprunt.dateRetourPrevue || '-' }}</td>
+          <td>
+            <span class="badge" [class.badge-open]="emprunt.statut === 'EN_COURS'">
+              {{ emprunt.statut }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noEmprunts>
+      <p class="no-data">Aucun emprunt pour le moment.</p>
+    </ng-template>
+  </div>
+</div>

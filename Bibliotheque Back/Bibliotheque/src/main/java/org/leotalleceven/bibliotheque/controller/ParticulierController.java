@@ -23,7 +23,7 @@ public class ParticulierController {
     }
 
     @GetMapping("/{id}")
-    public Particulier getParticulierById(@PathVariable Long id) {
+    public Particulier getParticulierById(@PathVariable Integer id) {
         return repo.findById(id).orElse(null);
     }
 
@@ -39,7 +39,7 @@ public class ParticulierController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteParticulier(@PathVariable Long id) {
+    public void deleteParticulier(@PathVariable Integer id) {
         repo.deleteById(id);
     }
 }

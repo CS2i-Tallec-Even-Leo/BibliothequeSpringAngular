@@ -1,10 +1,11 @@
 <div class="create-user-container">
   <h2>Créer un nouvel utilisateur</h2>
-  
+
+  <!-- Tabs -->
   <div class="user-type-tabs">
     <button
-      *ngFor="let type of ['etudiant', 'enseignant', 'particulier']"
-      (click)="switchUserType(type as any)"
+      *ngFor="let type of userTypes"
+      (click)="switchUserType(type)"
       [class.active]="userType === type"
       class="tab-btn"
     >
@@ -12,153 +13,83 @@
     </button>
   </div>
 
+  <!-- Messages -->
   <div *ngIf="error" class="error-message">{{ error }}</div>
   <div *ngIf="success" class="success-message">{{ success }}</div>
 
+  <!-- Form -->
   <form (ngSubmit)="onSubmit()" class="user-form">
-    <!-- Common fields -->
+    <!-- Nom / Prenom -->
     <div class="form-row">
       <div class="form-group">
         <label for="nom">Nom:</label>
-        <input
-          type="text"
-          id="nom"
-          [ngModel]="
-            userType === 'etudiant' ? etudiant.nom : userType === 'enseignant' ? enseignant.nom : particulier.nom
-          "
-          (ngModelChange)="
-            userType === 'etudiant' ? (etudiant.nom = $event) : userType === 'enseignant' ? (enseignant.nom = $event) : (particulier.nom = $event)
-          "
-          name="nom"
-          required
-        />
+        <input type="text" id="nom" [(ngModel)]="currentUser.nom" name="nom" required />
       </div>
 
       <div class="form-group">
         <label for="prenom">Prénom:</label>
-        <input
-          type="text"
-          id="prenom"
-          [ngModel]="
-            userType === 'etudiant' ? etudiant.prenom : userType === 'enseignant' ? enseignant.prenom : particulier.prenom
-          "
-          (ngModelChange)="
-            userType === 'etudiant' ? (etudiant.prenom = $event) : userType === 'enseignant' ? (enseignant.prenom = $event) : (particulier.prenom = $event)
-          "
-          name="prenom"
-          required
-        />
+        <input type="text" id="prenom" [(ngModel)]="currentUser.prenom" name="prenom" required />
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          [ngModel]="
-            userType === 'etudiant' ? etudiant.email : userType === 'enseignant' ? enseignant.email : particulier.email
-          "
-          (ngModelChange)="
-            userType === 'etudiant' ? (etudiant.email = $event) : userType === 'enseignant' ? (enseignant.email = $event) : (particulier.email = $event)
-          "
-          name="email"
-          required
-        />
-      </div>
+    <!-- Adresse -->
+    <div class="form-group">
+      <label for="adresse">Adresse:</label>
+      <textarea id="adresse" [(ngModel)]="currentUser.adresse" name="adresse"></textarea>
+    </div>
 
-      <div class="form-group">
-        <label for="telephone">Téléphone:</label>
-        <input
-          type="tel"
-          id="telephone"
-          [ngModel]="
-            userType === 'etudiant' ? etudiant.telephone : userType === 'enseignant' ? enseignant.telephone : particulier.telephone
-          "
-          (ngModelChange)="
-            userType === 'etudiant' ? (etudiant.telephone = $event) : userType === 'enseignant' ? (enseignant.telephone = $event) : (particulier.telephone = $event)
-          "
-          name="telephone"
-        />
-      </div>
+    <!-- Code Ville -->
+    <div class="form-group">
+      <label for="codeVille">Code Ville:</label>
+      <input type="text" id="codeVille" [(ngModel)]="currentUser.codeVille" name="codeVille" />
     </div>
 
     <div class="form-group">
-      <label for="adresse">Adresse:</label>
-      <textarea
-        id="adresse"
-        [ngModel]="
-          userType === 'etudiant' ? etudiant.adresse : userType === 'enseignant' ? enseignant.adresse : particulier.adresse
-        "
-        (ngModelChange)="
-          userType === 'etudiant' ? (etudiant.adresse = $event) : userType === 'enseignant' ? (enseignant.adresse = $event) : (particulier.adresse = $event)
-        "
-        name="adresse"
-      ></textarea>
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="currentUser.email" name="email" required />
     </div>
 
-    <!-- Etudiant specific -->
+    <div class="form-group">
+      <label for="caution">Caution du compte:</label>
+      <input
+        type="number"
+        id="caution"
+        [(ngModel)]="currentUser.caution"
+        name="caution"
+        min="0"
+        required
+      />
+    </div>
+
+    <!-- Etudiant -->
     <div *ngIf="userType === 'etudiant'" class="form-group">
-      <label for="numeroEtudiant">Numéro d'Étudiant:</label>
+      <label for="anneeUniversitaire">Année Universitaire:</label>
       <input
-        type="text"
-        id="numeroEtudiant"
-        [(ngModel)]="etudiant.numeroEtudiant"
-        name="numeroEtudiant"
+        type="number"
+        id="anneeUniversitaire"
+        [(ngModel)]="etudiant.anneeUniversitaire"
+        name="anneeUniversitaire"
       />
     </div>
 
-    <!-- Enseignant specific -->
+    <!-- Enseignant -->
     <div *ngIf="userType === 'enseignant'" class="form-group">
-      <label for="specialite">Spécialité:</label>
-      <input
-        type="text"
-        id="specialite"
-        [(ngModel)]="enseignant.specialite"
-        name="specialite"
-      />
-    </div>
-
-    <!-- Department select -->
-    <div *ngIf="userType !== 'particulier'" class="form-group">
-      <label for="departement">Département:</label>
-      <select
-        id="departement"
-        [ngModel]="userType === 'etudiant' ? etudiant.departement?.id : enseignant.departement?.id"
-        (ngModelChange)="
-          userType === 'etudiant' ? (etudiant.departement = $event) : (enseignant.departement = $event)
-        "
-        name="departement"
-      >
-        <option value="">Sélectionner un département</option>
-        <option *ngFor="let dept of departements" [value]="dept">
-          {{ dept.nom }}
+      <label for="codeDepartement">Département:</label>
+      <select id="codeDepartement" [(ngModel)]="enseignant.codeDepartement" name="codeDepartement">
+        <option [ngValue]="null">Sélectionner un département</option>
+        <option *ngFor="let dept of departements" [ngValue]="dept.codeDepartement">
+          {{ dept.nomDepartement }}
         </option>
       </select>
     </div>
 
-    <!-- Ville select -->
-    <div *ngIf="userType === 'particulier'" class="form-group">
-      <label for="ville">Ville:</label>
-      <select
-        id="ville"
-        [ngModel]="particulier.ville?.id"
-        (ngModelChange)="particulier.ville = $event"
-        name="ville"
-      >
-        <option value="">Sélectionner une ville</option>
-        <option *ngFor="let v of villes" [value]="v">{{ v.nom }}</option>
-      </select>
-    </div>
-
+    <!-- Actions -->
     <div class="form-actions">
       <button type="submit" [disabled]="loading" class="btn btn-success">
-        {{ loading ? 'Création en cours...' : 'Créer l\'utilisateur' }}
+        {{ loading ? 'Création en cours...' : "Créer l'utilisateur" }}
       </button>
-      <button type="button" routerLink="/home" class="btn btn-secondary">
-        Annuler
-      </button>
+
+      <button type="button" routerLink="/home" class="btn btn-secondary">Annuler</button>
     </div>
   </form>
 </div>

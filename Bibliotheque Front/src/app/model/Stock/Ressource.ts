@@ -1,6 +1,9 @@
+import { Stockage } from './Stockage';
+
 export interface Ressource {
-  id?: number;
+  id: number;
   titre: string;
   caution: number;
   codeBarre: string;
+  stockage?: Stockage;
 }

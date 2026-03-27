@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,6 +21,10 @@ public abstract class Ressource {
     private String titre;
     private int caution;
     private String codeBarre;
+
+    @ManyToOne
+    @JoinColumn(name = "stockage_id")
+    private Stockage stockage;
 
     public Ressource() {
     }
@@ -59,5 +65,13 @@ public abstract class Ressource {
 
     public void setCodeBarre(String codeBarre) {
         this.codeBarre = codeBarre;
+    }
+
+    public Stockage getStockage() {
+        return stockage;
+    }
+
+    public void setStockage(Stockage stockage) {
+        this.stockage = stockage;
     }
 }

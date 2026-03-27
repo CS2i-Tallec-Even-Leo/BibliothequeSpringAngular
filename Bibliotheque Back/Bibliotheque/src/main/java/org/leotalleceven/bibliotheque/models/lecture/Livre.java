@@ -10,16 +10,18 @@ public class Livre extends Ressource {
     private String iSBN;
     private String Auteur;
     private String Genre;
+    private Integer anneePublication;
 
     public Livre() {
         super();
     }
 
-    public Livre(String titre, int caution, String codeBarre, String iSBN, String auteur, String genre) {
+    public Livre(String titre, int caution, String codeBarre, String iSBN, String auteur, String genre, Integer anneePublication) {
         super(titre, caution, codeBarre);
         this.iSBN = iSBN;
         Auteur = auteur;
         Genre = genre;
+        this.anneePublication = anneePublication;
     }
 
     public String getiSBN() {
@@ -44,5 +46,13 @@ public class Livre extends Ressource {
 
     public void setGenre(String genre) {
         Genre = genre;
+    }
+
+    public Integer getAnneePublication() {
+        return anneePublication;
+    }
+
+    public void setAnneePublication(Integer anneePublication) {
+        this.anneePublication = anneePublication;
     }
 }

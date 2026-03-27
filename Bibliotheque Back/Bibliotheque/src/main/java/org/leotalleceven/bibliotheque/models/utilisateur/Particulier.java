@@ -18,17 +18,19 @@ public class Particulier {
     private String prenom;
     private String adresse;
     private String codeVille;
+    private String email;
     private int caution;
 
     public Particulier() {
     }
 
-    public Particulier(int id, String nom, String prenom, String adresse, String codeVille, int caution) {
+    public Particulier(int id, String nom, String prenom, String adresse, String codeVille, String email, int caution) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
         this.codeVille = codeVille;
+        this.email = email;
         this.caution = caution;
     }
 
@@ -70,6 +72,14 @@ public class Particulier {
 
     public void setCodeVille(String codeVille) {
         this.codeVille = codeVille;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getCaution() {

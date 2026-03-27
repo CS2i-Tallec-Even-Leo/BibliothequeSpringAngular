@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api';
 
 @Component({
   selector: 'app-connexion',
@@ -11,25 +12,38 @@ import { Router } from '@angular/router';
   styleUrl: './connexion.css',
 })
 export class Connexion {
-  email: string = '';
-  password: string = '';
+  nom: string = '';
+  prenom: string = '';
   loading = false;
   error: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+  ) {}
 
   onSubmit(): void {
     this.loading = true;
     this.error = null;
 
-    // Mock authentication - replace with actual API call
-    if (this.email && this.password) {
-      // Store token/user info in localStorage
-      localStorage.setItem('user', JSON.stringify({ email: this.email }));
-      this.router.navigate(['/home']);
-    } else {
+    if (!this.nom || !this.prenom) {
       this.error = 'Veuillez remplir tous les champs';
       this.loading = false;
+      return;
     }
+
+    this.apiService.loginUtilisateur({ nom: this.nom, prenom: this.prenom }).subscribe({
+      next: (user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.router.navigate(['/emprunts']);
+      },
+      error: () => {
+        this.error = 'Utilisateur introuvable. Verifiez nom et prenom.';
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
   }
 }

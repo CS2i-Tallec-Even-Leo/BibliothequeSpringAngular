@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="etudiants")
+//@Table(name="etudiants")
 public class Etudiant extends Particulier {
 
     private int anneeUniversitaire;
@@ -13,8 +13,8 @@ public class Etudiant extends Particulier {
         super();
     }
 
-    public Etudiant(int id, String nom, String prenom, String adresse, String codeVille, int caution, int anneeUniversitaire) {
-        super(id, nom, prenom, adresse, codeVille, caution);
+    public Etudiant(int id, String nom, String prenom, String adresse, String codeVille, String email, int caution, int anneeUniversitaire) {
+        super(id, nom, prenom, adresse, codeVille, email, caution);
         this.anneeUniversitaire = anneeUniversitaire;
     }
 

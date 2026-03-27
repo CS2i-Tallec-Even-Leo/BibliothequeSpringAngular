@@ -26,8 +26,16 @@
     <button routerLink="/create-user" class="tab-btn btn-create">Ajouter</button>
   </div>
 
-  <div *ngIf="loading" class="loading">Chargement...</div>
-  <div *ngIf="error" class="error-message">{{ error }}</div>
+  <div
+    *ngIf="loading"
+    class="d-flex align-items-center gap-2 py-3"
+    role="status"
+    aria-live="polite"
+  >
+    <div class="spinner-border text-primary spinner-border-sm" aria-hidden="true"></div>
+    <span>Chargement des utilisateurs...</span>
+  </div>
+  <div *ngIf="error" class="alert alert-danger" role="alert">{{ error }}</div>
 
   <!-- Enseignants -->
   <div *ngIf="activeTab === 'enseignants' && !loading" class="table-container">
@@ -36,8 +44,8 @@
         <tr>
           <th>Nom</th>
           <th>Prénom</th>
-          <th>Email</th>
-          <th>Spécialité</th>
+          <th>Adresse</th>
+          <th>Département</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -45,8 +53,8 @@
         <tr *ngFor="let ens of enseignants">
           <td>{{ ens.nom }}</td>
           <td>{{ ens.prenom }}</td>
-          <td>{{ ens.email }}</td>
-          <td>{{ ens.specialite }}</td>
+          <td>{{ ens.adresse }}</td>
+          <td>{{ ens.codeDepartement }}</td>
           <td>
             <button (click)="deleteTeacher(ens.id)" class="btn btn-danger btn-sm">Supprimer</button>
           </td>
@@ -65,8 +73,8 @@
         <tr>
           <th>Nom</th>
           <th>Prénom</th>
-          <th>Email</th>
-          <th>Numéro Étudiant</th>
+          <th>Adresse</th>
+          <th>Année Univ.</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -74,10 +82,12 @@
         <tr *ngFor="let etud of etudiants">
           <td>{{ etud.nom }}</td>
           <td>{{ etud.prenom }}</td>
-          <td>{{ etud.email }}</td>
-          <td>{{ etud.numeroEtudiant }}</td>
+          <td>{{ etud.adresse }}</td>
+          <td>{{ etud.anneeUniversitaire }}</td>
           <td>
-            <button (click)="deleteStudent(etud.id)" class="btn btn-danger btn-sm">Supprimer</button>
+            <button (click)="deleteStudent(etud.id)" class="btn btn-danger btn-sm">
+              Supprimer
+            </button>
           </td>
         </tr>
       </tbody>
@@ -94,8 +104,8 @@
         <tr>
           <th>Nom</th>
           <th>Prénom</th>
-          <th>Email</th>
-          <th>Téléphone</th>
+          <th>Adresse</th>
+          <th>Ville</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -103,10 +113,12 @@
         <tr *ngFor="let part of particuliers">
           <td>{{ part.nom }}</td>
           <td>{{ part.prenom }}</td>
-          <td>{{ part.email }}</td>
-          <td>{{ part.telephone }}</td>
+          <td>{{ part.adresse }}</td>
+          <td>{{ part.codeVille }}</td>
           <td>
-            <button (click)="deleteParticulier(part.id)" class="btn btn-danger btn-sm">Supprimer</button>
+            <button (click)="deleteParticulier(part.id)" class="btn btn-danger btn-sm">
+              Supprimer
+            </button>
           </td>
         </tr>
       </tbody>

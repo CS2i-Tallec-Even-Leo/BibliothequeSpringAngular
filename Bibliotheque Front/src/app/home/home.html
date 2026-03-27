@@ -1,10 +1,18 @@
 <div class="home-container">
   <h1>Bienvenue à la Bibliothèque</h1>
-  
-  <div *ngIf="loading" class="loading">Chargement des statistiques...</div>
-  
-  <div *ngIf="error" class="error-message">{{ error }}</div>
-  
+
+  <div
+    *ngIf="loading"
+    class="d-flex align-items-center gap-2 py-3"
+    role="status"
+    aria-live="polite"
+  >
+    <div class="spinner-border text-primary spinner-border-sm" aria-hidden="true"></div>
+    <span>Chargement des statistiques...</span>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger" role="alert">{{ error }}</div>
+
   <div class="stats-grid" *ngIf="!loading">
     <div class="stat-card">
       <h3>Livres</h3>
@@ -36,14 +44,15 @@
     <button (click)="navigateTo('list-ressources')" class="btn btn-primary">
       Voir les Ressources
     </button>
+    <button (click)="navigateTo('emprunts')" class="btn btn-warning">
+      Emprunter une Ressource
+    </button>
     <button (click)="navigateTo('list-users')" class="btn btn-primary">
       Voir les Utilisateurs
     </button>
     <button (click)="navigateTo('create-user')" class="btn btn-success">
       Ajouter un Utilisateur
     </button>
-    <button (click)="logout()" class="btn btn-danger">
-      Déconnexion
-    </button>
+    <button (click)="logout()" class="btn btn-danger">Déconnexion</button>
   </div>
 </div>

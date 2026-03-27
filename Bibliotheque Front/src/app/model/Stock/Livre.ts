@@ -1,11 +1,13 @@
-import { Auteur } from './Auteur';
+import { Stockage } from './Stockage';
 
 export interface Livre {
-  id?: number;
+  id: number;
   titre: string;
   caution: number;
   codeBarre: string;
-  isbn: string;
-  auteur?: Auteur;
-  genre: string;
+  iSBN?: string;
+  auteur?: string;
+  genre?: string;
+  anneePublication?: number;
+  stockage?: Stockage;
 }
