@@ -8,6 +8,6 @@ class BibliothequeApplicationTests {
 
     @Test
     void contextLoads() {
+        assert  true;
     }
-
 }

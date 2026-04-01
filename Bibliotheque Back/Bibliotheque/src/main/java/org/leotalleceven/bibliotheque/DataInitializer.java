@@ -35,8 +35,8 @@ public class DataInitializer implements CommandLineRunner {
     private final LivreRepository livreRepository;
     private final AuteurRepository auteurRepository;
     private final RevueRepository revueRepository;
-        private final ExemplaireRepository exemplaireRepository;
-        private final StockageRepository stockageRepository;
+    private final ExemplaireRepository exemplaireRepository;
+    private final StockageRepository stockageRepository;
     private final VilleRepository villeRepository;
     private final DepartementRepository departementRepository;
     private final EnseignantRepository enseignantRepository;

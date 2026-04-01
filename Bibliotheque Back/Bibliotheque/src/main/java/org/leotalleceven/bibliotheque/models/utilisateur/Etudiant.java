@@ -1,7 +1,6 @@
 package org.leotalleceven.bibliotheque.models.utilisateur;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 @Entity
 //@Table(name="etudiants")
