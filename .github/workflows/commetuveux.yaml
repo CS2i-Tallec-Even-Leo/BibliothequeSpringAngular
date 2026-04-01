@@ -50,10 +50,3 @@ jobs:
       - name: Build app
         working-directory: Bibliotheque Front
         run: npm run build
-
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: Bibliotheque Front/dist
-
-      - uses: actions/deploy-pages@v4
-        id: deployment
