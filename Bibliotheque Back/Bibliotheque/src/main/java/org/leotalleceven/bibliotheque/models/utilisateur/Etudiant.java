@@ -3,7 +3,6 @@ package org.leotalleceven.bibliotheque.models.utilisateur;
 import jakarta.persistence.Entity;
 
 @Entity
-//@Table(name="etudiants")
 public class Etudiant extends Particulier {
 
     private int anneeUniversitaire;

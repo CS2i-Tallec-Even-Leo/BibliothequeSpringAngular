@@ -3,7 +3,6 @@ package org.leotalleceven.bibliotheque.models.utilisateur;
 import jakarta.persistence.Entity;
 
 @Entity
-//@Table(name="enseignants")
 public class Enseignant extends Particulier {
 
     private int codeDepartement;
