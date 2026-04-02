@@ -21,6 +21,39 @@ Le projet permet de consulter et gerer les ressources d'une bibliotheque, les ut
 - Documentation OpenAPI et interface Swagger
 - Donnees de demo initialisees automatiquement au premier lancement
 
+## Demarrage rapide
+
+### 1. Lancer le backend
+
+Depuis la racine du workspace:
+
+```bash
+cd "Bibliotheque Back/Bibliotheque"
+mvn spring-boot:run
+```
+
+Le backend demarre sur `http://localhost:8080`.
+
+### 2. Lancer le frontend
+
+Dans un second terminal:
+
+```bash
+cd "Bibliotheque Front"
+npm install
+npm start
+```
+
+Le frontend demarre sur `http://localhost:4200`.
+
+### 3. Verifier que tout fonctionne
+
+- Frontend: `http://localhost:4200`
+- API REST: `http://localhost:8080/api`
+- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+- Console H2: `http://localhost:8080/h2-console`
+
 ## Architecture
 
 ```text
@@ -61,42 +94,9 @@ BibliothequeSpringAngular/
 - Node.js 20 ou plus
 - npm
 
-## Demarrage rapide
-
-### 1. Lancer le backend
-
-Depuis la racine du workspace:
-
-```bash
-cd "Bibliotheque Back/Bibliotheque"
-mvn spring-boot:run
-```
-
-Le backend demarre sur `http://localhost:8080`.
-
-### 2. Lancer le frontend
-
-Dans un second terminal:
-
-```bash
-cd "Bibliotheque Front"
-npm install
-npm start
-```
-
-Le frontend demarre sur `http://localhost:4200`.
-
-### 3. Verifier que tout fonctionne
-
-- Frontend: `http://localhost:4200`
-- API REST: `http://localhost:8080/api`
-- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
-- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
-- Console H2: `http://localhost:8080/h2-console`
-
 ## Configuration actuelle
 
-### Backend
+### Backend Configuration
 
 Le backend utilise une base H2 sur fichier local:
 
@@ -108,7 +108,7 @@ spring.h2.console.enabled=true
 
 La base est persistante entre les redemarrages de l'application.
 
-### Frontend
+### Frontend Configuration
 
 Le frontend appelle l'API avec une URL relative `/api`.
 En developpement, le fichier `proxy.conf.json` redirige ces requetes vers `http://localhost:8080`.
@@ -183,7 +183,7 @@ La plupart des endpoints CRUD supportent `GET`, `POST`, `PUT` et `DELETE`.
 
 ## Commandes utiles
 
-### Backend
+### Backend Commandes
 
 ```bash
 cd "Bibliotheque Back/Bibliotheque"
@@ -192,7 +192,7 @@ mvn test
 mvn spring-boot:run
 ```
 
-### Frontend
+### Frontend Commandes
 
 ```bash
 cd "Bibliotheque Front"
@@ -204,7 +204,7 @@ npm test
 
 ## Structure du code
 
-### Backend
+### Backend Structure
 
 - `src/main/java/.../controller`: endpoints REST
 - `src/main/java/.../models`: entites metier
@@ -212,7 +212,7 @@ npm test
 - `src/main/resources/application.properties`: configuration applicative
 - `DataInitializer.java`: jeu de donnees initialise au demarrage
 
-### Frontend
+### Frontend Structure
 
 - `src/app/services`: service d'appel API
 - `src/app/model`: modeles TypeScript

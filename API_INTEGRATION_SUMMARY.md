@@ -1,220 +1,96 @@
-# Intégration API - Résumé des modifications
+# Integration API
 
-## Vue d'ensemble
+Ce document decrit uniquement la communication entre le frontend Angular et le backend Spring Boot.
 
-Ce document résume les modifications apportées pour intégrer la communication entre le frontend Angular et le backend Spring Boot.
+## Principe general
 
-## Modifications Frontend (Angular)
-
-### 1. **ApiService** (`src/app/services/api.ts`)
-
-- URL de base: `http://localhost:8080/api`
-- Méthodes CRUD pour tous les endpoints:
-  - **Auteurs** (`/api/auteurs`)
-  - **Livres** (`/api/livres`)
-  - **Revues** (`/api/revues`)
-  - **Exemplaires** (`/api/exemplaires`) - NOUVEAU
-  - **Emprunts** (`/api/emprunts`) - NOUVEAU
-  - **Stockages** (`/api/stockages`)
-  - **Enseignants** (`/api/enseignants`)
-  - **Étudiants** (`/api/etudiants`)
-  - **Particuliers** (`/api/particuliers`)
-  - **Départements** (`/api/departements`)
-  - **Villes** (`/api/villes`)
-
-### 2. **Configuration HTTP** (`src/app/app.config.ts`)
-
-- Configuration de `HttpClient` avec support XSRF
-- Les requêtes HTTP sont maintenant correctement configurées
-
-### 3. **Routing** (`src/app/app.routes.ts`)
-
-- Route par défaut: `/home`
-- Routes disponibles:
-  - `/home` - Page d'accueil
-  - `/connexion` - Connexion utilisateur
-  - `/connexion-admin` - Connexion administrateur
-  - `/create-user` - Créer un utilisateur
-  - `/list-users` - Liste des utilisateurs
-  - `/list-ressources` - Liste des ressources
-
-### 4. **Composants mis à jour**
-
-#### Home (`src/app/home/`)
-
-- Affiche les statistiques de toutes les ressources
-- Charge les données depuis l'API au démarrage
-- Navigation vers les autres pages
-- Fonction de déconnexion
-
-#### Connexion (`src/app/connexion/`)
-
-- Formulaire de connexion utilisateur
-- Sauvegarde les données dans localStorage
-- Redirection vers `/home` après connexion
-
-#### Connexion Admin (`src/app/connexion-admin/`)
-
-- Formulaire de connexion administrateur
-- Rôle ADMIN sauvegardé dans localStorage
-
-#### Create User (`src/app/create-user/`)
-
-- Formulaire pour créer des utilisateurs (Étudiant, Enseignant, Particulier)
-- Charge dynamiquement les départements et villes depuis l'API
-- Validation des champs requis
-- Redirection après création succès
-
-#### List Users (`src/app/list-users/`)
-
-- Affichage des utilisateurs en listes tabulaires
-- Onglets pour Enseignants, Étudiants, Particuliers
-- Suppression d'utilisateurs
-- Chargement à la demande des données
-
-#### List Ressources (`src/app/list-ressources/`)
-
-- Affichage des ressources (Livres, Revues, Auteurs)
-- Onglets pour chaque type de ressource
-- Suppression de ressources
-- Chargement à la demande des données
-
-## Modifications Backend (Spring Boot)
-
-### 1. **Nouveaux Modèles**
-
-#### Exemplaire (`models/lecture/Exemplaire.java`)
-
-```java
-- id (Integer)
-- numeroExemplaire (String)
-- etat (String)
-- ressource (Ressource) - Many-to-One
-- dateAcquisition (String)
-```
-
-#### Emprunt (`models/Emprunt.java`)
-
-```java
-- id (Integer)
-- dateEmprunt (LocalDate)
-- dateRetourPrevue (LocalDate)
-- dateRetourEffectif (LocalDate)
-- statut (String)
-- particulier (Particulier) - Many-to-One
-- exemplaire (Exemplaire) - Many-to-One
-```
-
-### 2. **Nouveaux Repositories**
-
-- `ExemplaireRepository extends JpaRepository<Exemplaire, Integer>`
-- `EmpruntRepository extends JpaRepository<Emprunt, Integer>`
-
-### 3. **Nouveaux Controllers**
-
-#### ExemplaireController (`/api/exemplaires`)
-
-- GET `/api/exemplaires` - Récupérer tous les exemplaires
-- GET `/api/exemplaires/{id}` - Récupérer un exemplaire
-- POST `/api/exemplaires` - Créer un exemplaire
-- PUT `/api/exemplaires/{id}` - Modifier un exemplaire
-- DELETE `/api/exemplaires/{id}` - Supprimer un exemplaire
-
-#### EmpruntController (`/api/emprunts`)
-
-- GET `/api/emprunts` - Récupérer tous les emprunts
-- GET `/api/emprunts/{id}` - Récupérer un emprunt
-- POST `/api/emprunts` - Créer un emprunt
-- PUT `/api/emprunts/{id}` - Modifier un emprunt
-- DELETE `/api/emprunts/{id}` - Supprimer un emprunt
-
-### 4. **Configuration CORS**
-
-Tous les controllers ont le CORS activé pour `http://localhost:4200`:
-
-```java
-@CrossOrigin(origins = "http://localhost:4200")
-```
-
-## Architecture de Communication
-
-```sh
+```text
 Frontend Angular
-    ↓
-HttpClient/ApiService
-    ↓
-Spring Boot API (localhost:8080)
-    ↓
-JPA Repositories
-    ↓
-Base de données
+  -> ApiService
+  -> requetes HTTP sur /api
+  -> proxy Angular
+  -> backend Spring Boot sur http://localhost:8080
+  -> repositories JPA
+  -> base H2
 ```
 
-## Flux de données typique
+## Point d'entree frontend
 
-### Exemple: Créer un utilisateur
+Le frontend centralise les appels HTTP dans `src/app/services/api.ts`.
 
-1. Formulaire dans `create-user.component`
-2. Submit → `createEtudiant()` dans `ApiService`
-3. POST `/api/etudiants` avec les données
-4. Spring reçoit et sauvegarde
-5. Réponse retournée au frontend
-6. Message de succès et redirection
+- URL de base utilisee: `/api`
+- En developpement, `proxy.conf.json` redirige `/api` vers `http://localhost:8080`
+- Les composants consomment uniquement `ApiService`, sans appeler directement l'API
 
-### Exemple: Afficher la liste des ressources
+## Ressources exposees
 
-1. `list-ressources.component` - `ngOnInit()`
-2. Appelle `getLivres()`, `getRevues()`, `getAuteurs()`
-3. Les observables récupèrent les données
-4. Les données sont affichées dans les tableaux
-5. Onglets permettent de switcher entre les vues
+### Authentification
 
-## Points d'attention
+- `POST /api/auth/user-login`
+- `POST /api/auth/admin-login`
 
-⚠️ **Authentification**
+### Catalogue et stock
 
-- Les formulaires de connexion sont actuellement des mocks (localStorage)
-- À remplacer avec une vraie authentification JWT/OAuth2
+- `/api/auteurs`
+- `/api/livres`
+- `/api/revues`
+- `/api/exemplaires`
+- `/api/stockages`
 
-⚠️ **Gestion d'erreurs**
+### Utilisateurs et emprunts
 
-- Les erreurs API sont loggées en console
-- À améliorer avec un service dédié aux notifications d'erreur
+- `/api/enseignants`
+- `/api/etudiants`
+- `/api/particuliers`
+- `/api/emprunts`
+- `/api/departements`
+- `/api/villes`
 
-⚠️ **Validation**
+## Composants relies a l'API
 
-- Validation basique avec les attributs HTML `required`
-- À enrichir avec des validateurs Angular Reactive Forms
+- `home`: charge les statistiques et les donnees de synthese
+- `connexion`: connecte un utilisateur via l'API d'authentification
+- `connexion-admin`: connecte un bibliothecaire
+- `create-user`: cree des utilisateurs et charge les referentiels
+- `list-users`: recupere et supprime des utilisateurs
+- `list-ressources`: recupere et supprime des ressources
+- `emprunt`: cree, liste et met a jour les emprunts
 
-## Commandes utiles
+## Comportements d'integration importants
 
-### Démarrer le backend
+- Les donnees d'authentification sont stockees cote navigateur dans `localStorage`
+- Le backend autorise `http://localhost:4200` via `@CrossOrigin`
+- Les nouvelles entites `Exemplaire` et `Emprunt` sont exposees en CRUD
+- Le service d'emprunt expose aussi des routes de retour et de gestion des retards
 
-```bash
-cd "Bibliotheque Back/Bibliotheque"
-mvn spring-boot:run
-```
+## Flux typiques
 
-### Démarrer le frontend
+### Connexion utilisateur
 
-```bash
-cd "Bibliotheque Front"
-npm install
-ng serve
-```
+1. Le formulaire envoie `nom` et `prenom` a `POST /api/auth/user-login`.
+2. Le backend recherche un utilisateur existant.
+3. Le frontend enregistre la reponse dans `localStorage`.
 
-### URL d'accès
+### Creation d'un utilisateur
 
-- Frontend: <http://localhost:4200>
-- Backend API: <http://localhost:8080/api>
+1. Le composant charge d'abord departements et villes.
+2. Le formulaire appelle le bon endpoint selon le type d'utilisateur.
+3. La reponse est reaffichee dans l'interface puis la navigation continue.
 
-## Prochaines étapes recommandées
+### Gestion des emprunts
 
-1. ✅ Implémenter l'authentification réelle (JWT)
-2. ✅ Ajouter des validations Reactive Forms
-3. ✅ Créer un interceptor HTTP pour gérer les tokens
-4. ✅ Implémenter un service de notifications
-5. ✅ Améliorer la gestion des erreurs
-6. ✅ Ajouter des confirmations de suppression
-7. ✅ Implémenter les relations entre entités (JoinTable)
-8. ✅ Créer des DTOs pour les transferts de données
+1. Le frontend charge particuliers et exemplaires.
+2. La creation appelle `POST /api/emprunts`.
+3. Le retour d'un exemplaire passe par une route dediee du backend.
+
+## Limites actuelles de l'integration
+
+- Pas de JWT ni de session securisee
+- Gestion d'erreurs encore simple cote frontend
+- Les validations sont essentiellement fonctionnelles, pas encore centralisees
+
+## A consulter ensuite
+
+- `QUICK_START.md` pour lancer le projet
+- `IMPLEMENTATION_SUMMARY.md` pour la synthese des changements
+- `MODIFICATIONS_CHECKLIST.md` pour le suivi detaille
