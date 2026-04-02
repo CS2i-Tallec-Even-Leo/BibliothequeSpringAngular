@@ -16,6 +16,7 @@ class ExemplaireTest {
         assertThat(exemplaire.getNumeroExemplaire()).isEqualTo("EX001");
         assertThat(exemplaire.getEtat()).isEqualTo("Bon");
         assertThat(exemplaire.getRessource()).isEqualTo(livre);
+        assertThat(exemplaire.getDateAcquisition()).isEqualTo("2025-01-15");
     }
 
     @Test
@@ -24,6 +25,8 @@ class ExemplaireTest {
 
         assertThat(exemplaire.getId()).isNull();
         assertThat(exemplaire.getNumeroExemplaire()).isNull();
+        assertThat(exemplaire.getDateAcquisition()).isNull();
+
     }
 
     @Test
@@ -42,5 +45,6 @@ class ExemplaireTest {
         assertThat(exemplaire.getNumeroExemplaire()).isEqualTo("EX010");
         assertThat(exemplaire.getEtat()).isEqualTo("Usé");
         assertThat(exemplaire.getRessource()).isEqualTo(livre);
+        assertThat(exemplaire.getDateAcquisition()).isEqualTo("2024-06-01");
     }
 }

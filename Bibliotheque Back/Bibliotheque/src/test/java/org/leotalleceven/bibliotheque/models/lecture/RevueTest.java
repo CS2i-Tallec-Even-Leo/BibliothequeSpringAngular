@@ -17,6 +17,7 @@ class RevueTest {
         assertThat(revue.getCaution()).isEqualTo(20);
         assertThat(revue.getCodeBarre()).isEqualTo("0036-8733");
         assertThat(revue.getNumeroVolume()).isEqualTo(1);
+        assertThat(revue.getDateParution()).isEqualTo(date);
     }
 
     @Test
@@ -25,6 +26,10 @@ class RevueTest {
 
         assertThat(revue.getId()).isNull();
         assertThat(revue.getTitre()).isNull();
+        assertThat(revue.getCaution()).isEqualTo(0);
+        assertThat(revue.getCodeBarre()).isNull();
+        assertThat(revue.getNumeroVolume()).isEqualTo(0);
+        assertThat(revue.getDateParution()).isNull();
     }
 
     @Test
@@ -39,6 +44,7 @@ class RevueTest {
         assertThat(revue.getId()).isEqualTo(5);
         assertThat(revue.getTitre()).isEqualTo("Nature");
         assertThat(revue.getCaution()).isEqualTo(25);
+        assertThat(revue.getCodeBarre()).isEqualTo("0028-0836");
         assertThat(revue.getNumeroVolume()).isEqualTo(2);
     }
 }

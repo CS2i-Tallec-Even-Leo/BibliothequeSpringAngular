@@ -18,6 +18,7 @@ class VilleTest {
     void ville_shouldBeCreatedEmpty() {
         Ville ville = new Ville();
 
+        assertThat(ville.getCodeVille()).isEqualTo(0);
         assertThat(ville.getNomVille()).isNull();
     }
 

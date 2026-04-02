@@ -1,6 +1,5 @@
 package org.leotalleceven.bibliotheque.repository;
 
-import org.junit.jupiter.api.Test;
 
 /**
  * Repository tests are mainly for complex queries.

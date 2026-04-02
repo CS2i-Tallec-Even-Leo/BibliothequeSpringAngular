@@ -13,6 +13,8 @@ class StockageTest {
         assertThat(stockage.getNombreTotal()).isEqualTo(100);
         assertThat(stockage.getRestant()).isEqualTo(80);
         assertThat(stockage.getNumeroTrave()).isEqualTo(1);
+        assertThat(stockage.getNumeroEtagere()).isEqualTo(2);
+        assertThat(stockage.getNiveau()).isEqualTo(3);
         assertThat(stockage.getCategorie()).isEqualTo("Fiction");
     }
 
@@ -22,6 +24,12 @@ class StockageTest {
 
         assertThat(stockage.getId()).isEqualTo(0);
         assertThat(stockage.getCategorie()).isNull();
+        assertThat(stockage.getNombreTotal()).isEqualTo(0);
+        assertThat(stockage.getRestant()).isEqualTo(0);
+        assertThat(stockage.getNumeroTrave()).isEqualTo(0);
+        assertThat(stockage.getNumeroEtagere()).isEqualTo(0);
+        assertThat(stockage.getNiveau()).isEqualTo(0);
+
     }
 
     @Test
@@ -38,6 +46,9 @@ class StockageTest {
         assertThat(stockage.getId()).isEqualTo(5);
         assertThat(stockage.getNombreTotal()).isEqualTo(50);
         assertThat(stockage.getRestant()).isEqualTo(30);
+        assertThat(stockage.getNumeroTrave()).isEqualTo(2);
+        assertThat(stockage.getNumeroEtagere()).isEqualTo(1);
+        assertThat(stockage.getNiveau()).isEqualTo(2);
         assertThat(stockage.getCategorie()).isEqualTo("Reference");
     }
 }

@@ -26,6 +26,11 @@ class EmpruntTest {
 
         assertThat(emprunt.getId()).isNull();
         assertThat(emprunt.getStatut()).isNull();
+        assertThat(emprunt.getDateEmprunt()).isNull();
+        assertThat(emprunt.getDateRetourPrevue()).isNull();
+        assertThat(emprunt.getDateRetourEffectif()).isNull();
+        assertThat(emprunt.getExemplaire()).isNull();
+        assertThat(emprunt.getParticulier()).isNull();
     }
 
     @Test
@@ -38,17 +43,19 @@ class EmpruntTest {
 
         Emprunt emprunt = new Emprunt();
         emprunt.setId(50);
+        emprunt.setStatut("RETOURNE");
         emprunt.setDateEmprunt(LocalDate.of(2026, 3, 15));
         emprunt.setDateRetourPrevue(LocalDate.of(2026, 3, 30));
         emprunt.setDateRetourEffectif(LocalDate.of(2026, 3, 28));
-        emprunt.setStatut("RETOURNE");
         emprunt.setParticulier(utilisateur);
         emprunt.setExemplaire(exemplaire);
 
         assertThat(emprunt.getId()).isEqualTo(50);
         assertThat(emprunt.getStatut()).isEqualTo("RETOURNE");
+        assertThat(emprunt.getDateEmprunt()).isEqualTo(LocalDate.of(2026, 3, 15));
+        assertThat(emprunt.getDateRetourPrevue()).isEqualTo(LocalDate.of(2026, 3, 30));
+        assertThat(emprunt.getDateRetourEffectif()).isEqualTo(LocalDate.of(2026, 3, 28));
         assertThat(emprunt.getParticulier()).isEqualTo(utilisateur);
         assertThat(emprunt.getExemplaire()).isEqualTo(exemplaire);
-        assertThat(emprunt.getDateRetourEffectif()).isNotNull();
     }
 }
