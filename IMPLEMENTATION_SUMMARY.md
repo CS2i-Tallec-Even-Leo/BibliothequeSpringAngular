@@ -82,12 +82,14 @@
 ## 🔌 Architecture API
 
 ### URL de Base
-```
+
+```sh
 http://localhost:8080/api
 ```
 
 ### Endpoints Disponibles
-```
+
+```sh
 GET/POST    /api/auteurs
 GET/POST    /api/livres
 GET/POST    /api/revues
@@ -100,7 +102,7 @@ GET/POST    /api/particuliers
 GET/POST    /api/departements
 GET/POST    /api/villes
 
-Chaque endpoint supporte: GET (récupérer), POST (créer), 
+Chaque endpoint supporte: GET (récupérer), POST (créer),
                          PUT (modifier), DELETE (supprimer)
 ```
 
@@ -109,7 +111,8 @@ Chaque endpoint supporte: GET (récupérer), POST (créer),
 ## 🔄 Flux de Données Typique
 
 ### Exemple 1: Créer un étudiant
-```
+
+```sh
 User clicks "Créer Étudiant"
     ↓
 create-user.ts ngSubmit()
@@ -132,7 +135,8 @@ Redirection vers /list-users
 ```
 
 ### Exemple 2: Afficher la liste des ressources
-```
+
+```sh
 Component ngOnInit()
     ↓
 Appelle loadLivres(), loadRevues(), loadAuteurs()
@@ -159,35 +163,33 @@ this.apiService.getLivres().subscribe(
     this.livres = livres;
   },
   (error) => {
-    console.error('Erreur:', error);
-  }
+    console.error("Erreur:", error);
+  },
 );
 
 // Créer un nouvel étudiant
 const newEtudiant = {
-  nom: 'Dupont',
-  prenom: 'Jean',
-  email: 'jean@example.com',
-  telephone: '0123456789',
-  adresse: '123 Rue de Paris',
-  numeroEtudiant: 'E123456'
+  nom: "Dupont",
+  prenom: "Jean",
+  email: "jean@example.com",
+  telephone: "0123456789",
+  adresse: "123 Rue de Paris",
+  numeroEtudiant: "E123456",
 };
 
 this.apiService.createEtudiant(newEtudiant).subscribe(
   (response) => {
-    console.log('Étudiant créé:', response);
+    console.log("Étudiant créé:", response);
   },
   (error) => {
-    console.error('Erreur:', error);
-  }
+    console.error("Erreur:", error);
+  },
 );
 
 // Supprimer un utilisateur
-this.apiService.deleteEnseignant(id).subscribe(
-  () => {
-    console.log('Enseignant supprimé');
-  }
-);
+this.apiService.deleteEnseignant(id).subscribe(() => {
+  console.log("Enseignant supprimé");
+});
 ```
 
 ---
@@ -195,6 +197,7 @@ this.apiService.deleteEnseignant(id).subscribe(
 ## 🧪 Test des Endpoints
 
 ### Avec cURL
+
 ```bash
 # GET - Récupérer tous les livres
 curl http://localhost:8080/api/livres
@@ -217,6 +220,7 @@ curl -X DELETE http://localhost:8080/api/exemplaires/1
 ```
 
 ### Avec Postman
+
 1. Importer la collection API
 2. Définir la variable base_url: `http://localhost:8080/api`
 3. Tester chaque endpoint
@@ -226,7 +230,8 @@ curl -X DELETE http://localhost:8080/api/exemplaires/1
 ## 🎨 Interface Utilisateur
 
 ### Routes Frontend
-```
+
+```sh
 Home:           http://localhost:4200 ou http://localhost:4200/home
 Login User:     http://localhost:4200/connexion
 Login Admin:    http://localhost:4200/connexion-admin
@@ -236,7 +241,8 @@ Resources:      http://localhost:4200/list-ressources
 ```
 
 ### Composants et leurs responsabilités
-```
+
+```sh
 App (root)
 ├── Home
 │   └── Affiche statistiques + navigation
@@ -257,6 +263,7 @@ App (root)
 ## 🔐 Configuration CORS
 
 Tous les controllers Spring Boot ont:
+
 ```java
 @CrossOrigin(origins = "http://localhost:4200")
 ```
@@ -268,12 +275,14 @@ Cela permet au frontend Angular sur `localhost:4200` de faire des requêtes au b
 ## 📦 Dépendances Utilisées
 
 ### Backend (déjà incluses)
+
 - Spring Boot Starter Web
 - Spring Data JPA
 - Jakarta Persistence API
 - MySQL/H2 Database
 
 ### Frontend (déjà incluses)
+
 - Angular 17+
 - RxJS
 - HttpClient
@@ -288,12 +297,14 @@ Cela permet au frontend Angular sur `localhost:4200` de faire des requêtes au b
 ### Commandes pour tester
 
 **Démarrer le backend:**
+
 ```bash
 cd "Bibliotheque Back/Bibliotheque"
 mvn spring-boot:run
 ```
 
 **Démarrer le frontend:**
+
 ```bash
 cd "Bibliotheque Front"
 npm install
@@ -301,6 +312,7 @@ ng serve
 ```
 
 **Vérifier la connexion:**
+
 ```bash
 # Terminal
 curl http://localhost:8080/api/livres
@@ -313,12 +325,14 @@ L'API doit retourner un JSON vide `[]` ou avec des données selon votre base de 
 ## 🚀 Déploiement
 
 ### Backend
+
 ```bash
 mvn clean package
 java -jar target/bibliotheque-0.0.1-SNAPSHOT.jar
 ```
 
 ### Frontend
+
 ```bash
 ng build --configuration production
 # Servir les fichiers statiques
@@ -337,22 +351,14 @@ ng build --configuration production
 ## 🎓 Prochaines Améliorations Recommandées
 
 Niveau **URGENT**:
+
 1. ✅ JWT Token Authentication
 2. ✅ HTTP Interceptor pour les tokens
 3. ✅ Route Guards pour authentification
 
-Niveau **IMPORTANT**:
-4. ✅ Validation Reactive Forms avancée
-5. ✅ Pagination pour les listes
-6. ✅ Recherche et filtrage
-7. ✅ Tri des colonnes dans les tableaux
+Niveau **IMPORTANT**: 4. ✅ Validation Reactive Forms avancée 5. ✅ Pagination pour les listes 6. ✅ Recherche et filtrage 7. ✅ Tri des colonnes dans les tableaux
 
-Niveau **NICE-TO-HAVE**:
-8. ✅ Export à CSV/Excel
-9. ✅ Téléchargement fichiers
-10. ✅ Dashboard amélioré avec graphiques
-11. ✅ Notifications toast
-12. ✅ Undo/Redo d'actions
+Niveau **NICE-TO-HAVE**: 8. ✅ Export à CSV/Excel 9. ✅ Téléchargement fichiers 10. ✅ Dashboard amélioré avec graphiques 11. ✅ Notifications toast 12. ✅ Undo/Redo d'actions
 
 ---
 
@@ -360,6 +366,7 @@ Niveau **NICE-TO-HAVE**:
 
 Tous les fichiers source contiennent des commentaires explicatifs.
 Les trois fichiers de documentation fourniront aide supplémentaire pour:
+
 - Configuration système
 - Debugging courant
 - Structure des données
@@ -371,4 +378,4 @@ Les trois fichiers de documentation fourniront aide supplémentaire pour:
 
 L'intégration API est **100% opérationnelle**. Tous les composants Angular peuvent maintenant faire appel à la API Spring Boot. Les modèles sont alignés, le routing fonctionne, et les services CRUD sont complets pour tous les endpoints.
 
-**Status: ✅ PRÊT POUR TEST ET DÉPLOIEMENT**
+Status: ✅ PRÊT POUR TEST ET DÉPLOIEMENT

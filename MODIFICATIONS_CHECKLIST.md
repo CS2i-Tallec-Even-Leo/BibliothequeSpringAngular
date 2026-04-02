@@ -3,6 +3,7 @@
 ## ✅ Frontend Angular - Services
 
 ### ApiService (`src/app/services/api.ts`)
+
 - ✅ Méthodes CRUD pour Auteurs
 - ✅ Méthodes CRUD pour Livres
 - ✅ Méthodes CRUD pour Revues
@@ -19,11 +20,13 @@
 ## ✅ Frontend Angular - Configuration
 
 ### AppConfig (`src/app/app.config.ts`)
+
 - ✅ HttpClient configuré avec XSRF
 - ✅ Router fourni
 - ✅ Imports corrects
 
 ### AppRoutes (`src/app/app.routes.ts`)
+
 - ✅ Route par défaut vers `/home`
 - ✅ Route `/connexion`
 - ✅ Route `/connexion-admin`
@@ -33,6 +36,7 @@
 - ✅ Wildcard route vers `/home`
 
 ### App Root (`src/app/app.ts` et `app.html`)
+
 - ✅ RouterOutlet importé
 - ✅ Template contient router-outlet
 - ✅ Styles CSS basiques
@@ -40,6 +44,7 @@
 ## ✅ Frontend Angular - Composants
 
 ### Home Composant
+
 - ✅ Charge les statistiques depuis l'API
 - ✅ Affiche cartes de statistiques
 - ✅ Navigation vers autres pages
@@ -48,6 +53,7 @@
 - ✅ Imports: CommonModule, RouterLink, Router, ApiService
 
 ### Connexion Composant
+
 - ✅ Formulaire d'email/password
 - ✅ Validation basique
 - ✅ Stockage localStorage
@@ -56,6 +62,7 @@
 - ✅ Imports: CommonModule, FormsModule, RouterLink
 
 ### ConnexionAdmin Composant
+
 - ✅ Formulaire d'email/password
 - ✅ Stockage admin flag
 - ✅ Lien vers utilisateur
@@ -63,6 +70,7 @@
 - ✅ Rôle ADMIN sauvegardé
 
 ### CreateUser Composant
+
 - ✅ 3 onglets (Étudiant, Enseignant, Particulier)
 - ✅ Champs communs (nom, prénom, email, téléphone, adresse)
 - ✅ Champs spécifiques (numeroEtudiant, specialite)
@@ -73,6 +81,7 @@
 - ✅ Imports: CommonModule, FormsModule, RouterLink, ApiService
 
 ### ListUsers Composant
+
 - ✅ 3 onglets (Enseignants, Étudiants, Particuliers)
 - ✅ Tableaux pour chaque type d'utilisateur
 - ✅ Chargement lazy des données
@@ -83,6 +92,7 @@
 - ✅ Imports: CommonModule, RouterLink, ApiService
 
 ### ListRessources Composant
+
 - ✅ 3 onglets (Livres, Revues, Auteurs)
 - ✅ Tableaux pour chaque type
 - ✅ Chargement lazy des données
@@ -94,6 +104,7 @@
 ## ✅ Frontend Angular - Modèles (Interfaces TypeScript)
 
 ### Utilisateurs
+
 - ✅ `Particulier` - Mise à jour avec nouveaux champs
 - ✅ `Enseignant` - Relation Departement + specialite
 - ✅ `Etudiant` - Relation Departement + numeroEtudiant
@@ -101,6 +112,7 @@
 - ✅ `Ville` - id + nom
 
 ### Ressources
+
 - ✅ `Auteur` - id + nom + prenom
 - ✅ `Livre` - Extension Ressource + ISBN + Auteur + Genre
 - ✅ `Revue` - Extension Ressource + numero + dateParution
@@ -109,16 +121,19 @@
 - ✅ `Stockage` - Mise à jour avec id et camelCase
 
 ### Autres
+
 - ✅ `Emprunt` - NOUVEAU: dateEmprunt + dateRetour + statut + particulier + exemplaire
 - ✅ `Bibliotequaire` - Base pour les utilisateurs
 
 ## ✅ Backend Spring Boot - Modèles
 
 ### Models Créés/Mis à jour
+
 - ✅ `Exemplaire.java` - NOUVEAU avec @Entity @Table @ManyToOne
 - ✅ `Emprunt.java` - NOUVEAU avec @Entity @Table relations
 
 ### Models Existants Vérifiés
+
 - ✅ `Auteur.java` - @Entity @Table @GeneratedValue
 - ✅ `Departement.java` - @Entity @Table
 - ✅ `Villle.java` - @Entity @Table
@@ -133,10 +148,12 @@
 ## ✅ Backend Spring Boot - Repositories
 
 ### Repositories Créés
+
 - ✅ `ExemplaireRepository extends JpaRepository<Exemplaire, Integer>`
 - ✅ `EmpruntRepository extends JpaRepository<Emprunt, Integer>`
 
 ### Repositories Existants Vérifiés
+
 - ✅ `AuteurRepository`
 - ✅ `DepartementRepository`
 - ✅ `VilleRepository`
@@ -151,10 +168,12 @@
 ## ✅ Backend Spring Boot - Controllers
 
 ### Controllers Créés
+
 - ✅ `ExemplaireController` - Routes `/api/exemplaires` avec CRUD
 - ✅ `EmpruntController` - Routes `/api/emprunts` avec CRUD
 
 ### Controllers Existants Vérifiés
+
 - ✅ `AuteurController` - `/api/auteurs` CRUD
 - ✅ `LivreController` - `/api/livres` CRUD
 - ✅ `RevueController` - `/api/revues` CRUD
@@ -167,6 +186,7 @@
 - ✅ `MainController` - Documentation des routes
 
 ### Controller Configuration
+
 - ✅ Tous les controllers ont `@CrossOrigin(origins = "http://localhost:4200")`
 - ✅ Tous les endpoints sont `/api/...`
 - ✅ Tous les controllers sont `@RestController`
@@ -174,23 +194,25 @@
 ## ✅ Documentation
 
 ### Fichiers Créés
+
 - ✅ `API_INTEGRATION_SUMMARY.md` - Documentation complète intégration
 - ✅ `QUICK_START.md` - Guide de démarrage rapide
 - ✅ `MODIFICATIONS_CHECKLIST.md` - Ce fichier
 
 ## ✅ Configuration CORS
 
-- ✅ Frontend: http://localhost:4200
-- ✅ Backend API base: http://localhost:8080/api
+- ✅ Frontend: <http://localhost:4200>
+- ✅ Backend API base: <http://localhost:8080/api>
 - ✅ CORS activé sur tous les controllers
 - ✅ HttpClient configuré
 
 ## Points de Vérification Critiques
 
 ⚠️ **À tester après démarrage**:
-1. ✅ Frontend démarre sur http://localhost:4200
-2. ✅ Backend démarre sur http://localhost:8080
-3. ✅ Requête API test: GET http://localhost:8080/api/livres
+
+1. ✅ Frontend démarre sur <http://localhost:4200>
+2. ✅ Backend démarre sur <http://localhost:8080>
+3. ✅ Requête API test: GET <http://localhost:8080/api/livres>
 4. ✅ Navigation fonctionne (routeur)
 5. ✅ Appel API depuis le frontend réussit
 6. ✅ Affichage des données récupérées
@@ -202,6 +224,7 @@
 ## Nouvelles Dépendances/Imports Ajoutés
 
 ### Frontend
+
 - CommonModule (déjà existant)
 - FormsModule (déjà existant)
 - RouterLink (nouveau usage)
@@ -209,6 +232,7 @@
 - HttpClient (via app.config.ts)
 
 ### Backend
+
 - Aucune nouvelle dépendance Maven nécessaire
 - Jakarta Persistence API (déjà existant)
 - Spring Data JPA (déjà existant)
@@ -224,6 +248,7 @@
 ## Sécurité - Points à Améliorer
 
 ⚠️ **À implémenter**:
+
 - JWT Token authentication (au lieu du localStorage mock)
 - Service d'authentification
 - Interceptor HTTP pour les tokens
@@ -233,7 +258,7 @@
 
 ## Résumé des Fichiers Modifiés
 
-```
+```sh
 Compteur: 20+ fichiers modifiés/créés
 
 Frontend:

@@ -1,4 +1,4 @@
-name: Comme tu veux
+name: Bibliothèque CI
 
 on:
   push:

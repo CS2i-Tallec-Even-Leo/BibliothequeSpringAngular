@@ -1,45 +1,52 @@
 # Guide de Démarrage Rapide
 
 ## Prérequis
+
 - Node.js et npm installés
 - Java 17+ installé
 - Maven installé
-- Un IDE (VS Code, IntelliJ, Eclipse)
+- Un IDE (VS Code, IntelliJ)
 
 ## Installation et Configuration
 
 ### 1. Backend (Spring Boot)
 
 #### Étape 1: Accédez au dossier du backend
+
 ```bash
 cd "Bibliotheque Back/Bibliotheque"
 ```
 
 #### Étape 2: Compilez le projet
+
 ```bash
 mvn clean install
 ```
 
 #### Étape 3: Démarrez le serveur Spring Boot
+
 ```bash
 mvn spring-boot:run
 ```
 
-Le serveur doit être disponible sur: **http://localhost:8080**
+Le serveur doit être disponible sur: **<http://localhost:8080>**
 
 ### 2. Frontend (Angular)
 
 #### Étape 1: Accédez au dossier du frontend
+
 ```bash
 cd "Bibliotheque Front"
 ```
 
 #### Étape 2: Installez les dépendances
+
 ```bash
 npm install
 ```
 
 #### Étape 3: Démarrez le serveur de développement
+
 ```bash
 ng serve
 ```
@@ -50,25 +57,27 @@ ou
 npm start
 ```
 
-L'application doit être disponible sur: **http://localhost:4200**
+L'application doit être disponible sur: **<http://localhost:4200>**
 
 ## Vérification de la configuration
 
-✅ **Backend opérationnel**: http://localhost:8080/api/livres
-✅ **Frontend accessible**: http://localhost:4200
+✅ **Backend opérationnel**: <http://localhost:8080/api/livres>
+✅ **Frontend accessible**: <http://localhost:4200>
 ✅ **CORS activé**: Les requêtes du frontend vers le backend doivent fonctionner
 
 ## Les pages disponibles
 
 ### Frontend Routes
+
 - **/** ou **/home** → Page d'accueil (statistiques)
-- **/connexion** → Connexion utilisateur  
+- **/connexion** → Connexion utilisateur
 - **/connexion-admin** → Connexion administrateur
 - **/create-user** → Créer un utilisateur
 - **/list-users** → Liste des utilisateurs
 - **/list-ressources** → Liste des ressources
 
 ### API Endpoints disponibles
+
 - **GET/POST** `/api/auteurs` - Auteurs
 - **GET/POST** `/api/livres` - Livres
 - **GET/POST** `/api/revues` - Revues
@@ -83,7 +92,7 @@ L'application doit être disponible sur: **http://localhost:4200**
 
 ## Structure des projets
 
-```
+```sh
 BibliothequeSpringAngular/
 ├── Bibliotheque Back/
 │   └── Bibliotheque/
@@ -121,7 +130,8 @@ BibliothequeSpringAngular/
 ## Workflow typique
 
 ### 1. Créer un utilisateur
-```
+
+```sh
 Frontend: Remplir formulaire create-user
   ↓
 ApiService: POST /api/etudiants
@@ -136,7 +146,8 @@ Frontend: Redirection vers list-users
 ```
 
 ### 2. Afficher la liste des ressources
-```
+
+```sh
 Frontend: Composant list-ressources
   ↓
 ApiService: GET /api/livres, /api/revues, /api/auteurs
@@ -149,22 +160,28 @@ Frontend: Affiche dans les tableaux
 ## Dépannage courant
 
 ### Le frontend ne peut pas atteindre le backend
+
 **Problème**: Erreur CORS ou connection refused
 **Solution**:
+
 1. Vérifiez que le backend est bien en train de tourner sur le port 8080
 2. Vérifiez que `@CrossOrigin(origins = "http://localhost:4200")` est présent dans les contrôleurs
 3. Vérifiez la console du navigateur pour les erreurs CORS
 
 ### Les données ne s'affichent pas
+
 **Problème**: Requête API réussit mais pas d'affichage
 **Solution**:
+
 1. Vérifiez la console du navigateur (F12) pour les erreurs
 2. Vérifiez que les modèles TypeScript correspondent aux données retournées
 3. Utilisez Angular DevTools pour inspecter le composant
 
 ### Erreur 404 sur l'API
+
 **Problème**: Endpoint non trouvé
 **Solution**:
+
 1. Vérifiez que le contrôleur est bien créé
 2. Vérifiez l'url: `/api/ressource`
 3. Vérifiez que @RequestMapping est correct
