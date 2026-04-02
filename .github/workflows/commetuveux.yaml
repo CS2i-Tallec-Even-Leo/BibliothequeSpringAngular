@@ -55,6 +55,7 @@ jobs:
       - name: Run frontend tests
         working-directory: Bibliotheque Front
         run: npm run test -- --watch=false
+
   build:
     name: Build
     needs: [backend, frontend]
