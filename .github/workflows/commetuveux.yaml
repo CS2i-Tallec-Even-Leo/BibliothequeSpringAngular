@@ -71,3 +71,68 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+
+      - name: Build backend
+        working-directory: Bibliotheque Back/Bibliotheque
+        run: chmod +x mvnw && ./mvnw -B package -DskipTests
+
+      # ── Swagger / OpenAPI doc generation ─────────────────────────────────
+      - name: Start backend & wait for readiness
+        working-directory: Bibliotheque Back/Bibliotheque
+        run: |
+          java -jar target/*.jar &
+          echo $! > /tmp/backend.pid
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:8080/actuator/health && break || sleep 2
+          done
+
+      - name: Download OpenAPI spec
+        run: |
+          curl -sf http://localhost:8080/v3/api-docs -o openapi.json
+          curl -sf http://localhost:8080/v3/api-docs.yaml -o openapi.yaml
+
+      - name: Generate Swagger UI (static)
+        run: |
+          npx --yes @redocly/cli build-docs openapi.json \
+            --output swagger-ui/index.html \
+            --title "Bibliothèque API"
+          cp openapi.json swagger-ui/openapi.json
+          cp openapi.yaml swagger-ui/openapi.yaml
+
+      - name: Stop backend
+        if: always()
+        run: kill $(cat /tmp/backend.pid) || true
+      # ─────────────────────────────────────────────────────────────────────
+
+      - name: Upload swagger artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swagger-ui
+          path: swagger-ui/
+
+  deploy-swagger:
+    name: Deploy Swagger to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download swagger artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: swagger-ui
+          path: swagger-ui/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload to Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: swagger-ui/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
