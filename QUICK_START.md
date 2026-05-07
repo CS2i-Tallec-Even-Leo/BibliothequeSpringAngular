@@ -62,4 +62,3 @@ Frontend disponible sur `http://localhost:4200`.
 
 - `API_INTEGRATION_SUMMARY.md`: details de communication front/back
 - `IMPLEMENTATION_SUMMARY.md`: synthese des evolutions realisees
-- `MODIFICATIONS_CHECKLIST.md`: checklist des modifications

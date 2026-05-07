@@ -1,0 +1,27 @@
+{
+  "validUsers": {
+    "user1": {
+      "nom": "Rouge",
+      "prenom": "Emma",
+      "email": "emma.rouge@mail.local",
+      "type": "particulier"
+    },
+    "user2": {
+      "nom": "Dupont",
+      "prenom": "Marie",
+      "email": "marie.dupont@univ.local",
+      "type": "enseignant"
+    }
+  },
+  "admin": {
+    "email": "admin@bibliotheque.local",
+    "password": "admin123",
+    "type": "admin"
+  },
+  "invalidUsers": [
+    {
+      "nom": "Invalid",
+      "prenom": "User"
+    }
+  ]
+}
