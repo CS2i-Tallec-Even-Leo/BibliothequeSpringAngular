@@ -1,0 +1,177 @@
+name: Bibliothèque CI/CD
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# ──────────────────────────────────────────────
+# TESTS
+# ──────────────────────────────────────────────
+jobs:
+  backend:
+    name: Backend
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Run backend tests
+        working-directory: Bibliotheque Back/Bibliotheque
+        run: chmod +x mvnw && ./mvnw -B test
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: Bibliotheque Front/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: Bibliotheque Front
+        run: npm ci
+
+      - name: Run frontend tests
+        working-directory: Bibliotheque Front
+        run: npm run test -- --watch=false
+
+  # ──────────────────────────────────────────────
+  # BUILD — Documentation Zensical
+  # (indépendant des tests, peut tourner en parallèle)
+  # ──────────────────────────────────────────────
+  build-docs:
+    name: Build Docs (Zensical)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - run: pip install zensical
+      - run: zensical build --clean
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-site
+          path: site/
+
+  # ──────────────────────────────────────────────
+  # BUILD — Swagger / OpenAPI
+  # (nécessite que les tests backend et frontend passent)
+  # ──────────────────────────────────────────────
+  build-swagger:
+    name: Build Swagger
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Build backend
+        working-directory: Bibliotheque Back/Bibliotheque
+        run: chmod +x mvnw && ./mvnw -B package -DskipTests
+
+      - name: Start backend & wait for readiness
+        working-directory: Bibliotheque Back/Bibliotheque
+        run: |
+          java -jar target/*.jar &
+          echo $! > /tmp/backend.pid
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:8080/actuator/health && break || sleep 2
+          done
+
+      - name: Download OpenAPI spec
+        run: |
+          curl -sf http://localhost:8080/v3/api-docs      -o openapi.json
+          curl -sf http://localhost:8080/v3/api-docs.yaml -o openapi.yaml
+
+      - name: Generate Swagger UI (static)
+        run: |
+          npx --yes @redocly/cli build-docs openapi.json \
+            --output swagger-ui/index.html \
+            --title "Bibliothèque API"
+          cp openapi.json swagger-ui/openapi.json
+          cp openapi.yaml swagger-ui/openapi.yaml
+
+      - name: Stop backend
+        if: always()
+        run: kill $(cat /tmp/backend.pid) || true
+
+      - name: Upload swagger artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swagger-ui
+          path: swagger-ui/
+
+  # ──────────────────────────────────────────────
+  # DÉPLOIEMENT — fusion des deux sites sur Pages
+  # ──────────────────────────────────────────────
+  deploy-pages:
+    name: Deploy to GitHub Pages
+    needs: [build-docs, build-swagger]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download docs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-site
+          path: site/
+
+      - name: Download swagger artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: swagger-ui
+          path: site/swagger/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload merged site to Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
