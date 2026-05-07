@@ -4,6 +4,8 @@ Application de gestion de bibliotheque composee d'un backend Spring Boot et d'un
 
 Le projet permet de consulter et gerer les ressources d'une bibliotheque, les utilisateurs, les exemplaires et les emprunts via une interface web connectee a une API REST.
 
+Lien vers le [Swagger](https://cs2i-tallec-even-leo.github.io/BibliothequeSpringAngular/swagger/)
+
 ## Apercu
 
 - Backend: Spring Boot 4, Spring Web, Spring Data JPA, H2, Springdoc OpenAPI
