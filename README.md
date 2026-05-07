@@ -229,7 +229,6 @@ npm test
 - `QUICK_START.md`: demarrage rapide
 - `API_INTEGRATION_SUMMARY.md`: details de l'integration front/back
 - `IMPLEMENTATION_SUMMARY.md`: synthese des evolutions implementees
-- `MODIFICATIONS_CHECKLIST.md`: liste des changements realises
 
 ## Limites actuelles
 
