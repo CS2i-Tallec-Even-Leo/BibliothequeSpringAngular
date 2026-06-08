@@ -2,6 +2,7 @@ name: Bibliothèque CI/CD - Publish Image
 
 on:
   workflow_call:
+
 jobs:
   publish-image:
     name: Publish Docker Images
@@ -39,7 +40,6 @@ jobs:
             --platform linux/amd64,linux/arm64 \
             -t "${BACKEND_IMAGE}" \
             --push \
-            -f Bibliotheque-Back/Bibliotheque/Dockerfile \
             Bibliotheque-Back/Bibliotheque
 
       - name: Build and push frontend image
@@ -50,5 +50,4 @@ jobs:
             --platform linux/amd64,linux/arm64 \
             -t "${FRONTEND_IMAGE}" \
             --push \
-            -f "Bibliotheque-Front/Dockerfile" \
-            "Bibliotheque-Front"
+            Bibliotheque-Front

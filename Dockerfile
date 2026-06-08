@@ -5,7 +5,8 @@ FROM eclipse-temurin:17-jdk AS build
 
 WORKDIR /app
 
-COPY Bibliotheque-Back/Bibliotheque/ .
+# Build context IS Bibliotheque-Back/Bibliotheque/, so just copy "."
+COPY . .
 
 RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
