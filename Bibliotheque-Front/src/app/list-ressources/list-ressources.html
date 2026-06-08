@@ -1,0 +1,267 @@
+<div class="list-ressources-container">
+  <h2>Gestion des Ressources</h2>
+
+  <div class="mb-3" *ngIf="isAdmin">
+    <span class="badge bg-success">Session bibliothecaire active</span>
+  </div>
+
+  <div class="mb-3">
+    <a routerLink="/emprunts" class="btn btn-primary btn-sm">Emprunter une ressource</a>
+  </div>
+
+  <div class="card p-3 mb-3" *ngIf="!loading">
+    <h3>Ajouter un emplacement</h3>
+    <div class="row g-2">
+      <div class="col-md-2">
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="newStockage.numeroTrave"
+          placeholder="Travee"
+        />
+      </div>
+      <div class="col-md-2">
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="newStockage.numeroEtagere"
+          placeholder="Etagere"
+        />
+      </div>
+      <div class="col-md-2">
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="newStockage.niveau"
+          placeholder="Niveau"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          class="form-control"
+          type="text"
+          [(ngModel)]="newStockage.categorie"
+          placeholder="Categorie"
+        />
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-success w-100" (click)="createStockage()">Creer emplacement</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-3 mb-3" *ngIf="!loading">
+    <h3>Associer un emplacement et creer une ressource</h3>
+    <div class="mb-3">
+      <label class="form-label">Emplacement</label>
+      <select class="form-select" [(ngModel)]="selectedStockageId" name="selectedStockageId">
+        <option [ngValue]="null">Selectionner un emplacement</option>
+        <option *ngFor="let stockage of stockages" [ngValue]="stockage.id">
+          T{{ stockage.numeroTrave }} / E{{ stockage.numeroEtagere }} / N{{ stockage.niveau }} -
+          {{ stockage.categorie }}
+        </option>
+      </select>
+    </div>
+
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label">Titre livre</label>
+        <input class="form-control" [(ngModel)]="newLivre.titre" name="livreTitre" />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Caution</label>
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="newLivre.caution"
+          name="livreCaution"
+        />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">ISBN</label>
+        <input class="form-control" [(ngModel)]="newLivre.iSBN" name="livreIsbn" />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Auteur</label>
+        <input class="form-control" [(ngModel)]="newLivre.auteur" name="livreAuteur" />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Theme</label>
+        <input class="form-control" [(ngModel)]="newLivre.genre" name="livreTheme" />
+      </div>
+      <div class="col-md-1">
+        <label class="form-label">Annee</label>
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="newLivre.anneePublication"
+          name="livreAnnee"
+        />
+      </div>
+      <div class="col-md-12">
+        <button class="btn btn-primary" (click)="createLivre()">Creer livre</button>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row g-2 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label">Titre revue</label>
+        <input class="form-control" [(ngModel)]="newRevue.titre" name="revueTitre" />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Caution</label>
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="newRevue.caution"
+          name="revueCaution"
+        />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Numero volume</label>
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="newRevue.numeroVolume"
+          name="revueVolume"
+        />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Date parution</label>
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="newRevue.dateParution"
+          name="revueDate"
+        />
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary w-100" (click)="createRevue()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-3 mb-3" *ngIf="!loading">
+    <h3>Emprunts en retard</h3>
+    <p *ngIf="retards.length === 0" class="mb-2">Aucun retard detecte.</p>
+    <ul *ngIf="retards.length > 0" class="mb-3">
+      <li *ngFor="let retard of retards">{{ formatRetard(retard) }}</li>
+    </ul>
+    <button
+      class="btn btn-warning"
+      [disabled]="notifying || retards.length === 0"
+      (click)="notifierRetards()"
+    >
+      {{ notifying ? 'Envoi en cours...' : 'Envoyer les mails de rappel' }}
+    </button>
+  </div>
+
+  <div class="tabs">
+    <button (click)="switchTab('livres')" [class.active]="activeTab === 'livres'" class="tab-btn">
+      Livres ({{ livres.length }})
+    </button>
+    <button (click)="switchTab('revues')" [class.active]="activeTab === 'revues'" class="tab-btn">
+      Revues ({{ revues.length }})
+    </button>
+    <button (click)="switchTab('auteurs')" [class.active]="activeTab === 'auteurs'" class="tab-btn">
+      Auteurs ({{ auteurs.length }})
+    </button>
+  </div>
+
+  <div
+    *ngIf="loading"
+    class="d-flex align-items-center gap-2 py-3"
+    role="status"
+    aria-live="polite"
+  >
+    <div class="spinner-border text-primary spinner-border-sm" aria-hidden="true"></div>
+    <span>Chargement des ressources...</span>
+  </div>
+  <div *ngIf="error" class="alert alert-danger" role="alert">{{ error }}</div>
+  <div *ngIf="success" class="alert alert-success" role="status">{{ success }}</div>
+
+  <!-- Livres -->
+  <div *ngIf="activeTab === 'livres' && !loading" class="table-container">
+    <table *ngIf="livres.length > 0; else noLivres">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>ISBN</th>
+          <th>Auteur</th>
+          <th>Genre</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let livre of livres">
+          <td>{{ livre.titre }}</td>
+          <td>{{ livre.iSBN }}</td>
+          <td>{{ livre.auteur }}</td>
+          <td>{{ livre.genre }}</td>
+          <td>
+            <button (click)="deleteLivre(livre.id)" class="btn btn-danger btn-sm">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noLivres>
+      <p class="no-data">Aucun livre</p>
+    </ng-template>
+  </div>
+
+  <!-- Revues -->
+  <div *ngIf="activeTab === 'revues' && !loading" class="table-container">
+    <table *ngIf="revues.length > 0; else noRevues">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Numéro</th>
+          <th>Caution</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let revue of revues">
+          <td>{{ revue.titre }}</td>
+          <td>{{ revue.numeroVolume }}</td>
+          <td>{{ revue.caution }}</td>
+          <td>
+            <button (click)="deleteRevue(revue.id)" class="btn btn-danger btn-sm">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noRevues>
+      <p class="no-data">Aucune revue</p>
+    </ng-template>
+  </div>
+
+  <!-- Auteurs -->
+  <div *ngIf="activeTab === 'auteurs' && !loading" class="table-container">
+    <table *ngIf="auteurs.length > 0; else noAuteurs">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let auteur of auteurs">
+          <td>{{ auteur.nom }}</td>
+          <td>{{ auteur.prenom }}</td>
+          <td>
+            <button (click)="deleteAuteur(auteur.id)" class="btn btn-danger btn-sm">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noAuteurs>
+      <p class="no-data">Aucun auteur</p>
+    </ng-template>
+  </div>
+</div>

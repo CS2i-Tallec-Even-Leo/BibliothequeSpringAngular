@@ -1,0 +1,95 @@
+<div class="create-user-container">
+  <h2>Créer un nouvel utilisateur</h2>
+
+  <!-- Tabs -->
+  <div class="user-type-tabs">
+    <button
+      *ngFor="let type of userTypes"
+      (click)="switchUserType(type)"
+      [class.active]="userType === type"
+      class="tab-btn"
+    >
+      {{ type === 'etudiant' ? 'Étudiant' : type === 'enseignant' ? 'Enseignant' : 'Particulier' }}
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+  <div *ngIf="success" class="success-message">{{ success }}</div>
+
+  <!-- Form -->
+  <form (ngSubmit)="onSubmit()" class="user-form">
+    <!-- Nom / Prenom -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" [(ngModel)]="currentUser.nom" name="nom" required />
+      </div>
+
+      <div class="form-group">
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" [(ngModel)]="currentUser.prenom" name="prenom" required />
+      </div>
+    </div>
+
+    <!-- Adresse -->
+    <div class="form-group">
+      <label for="adresse">Adresse:</label>
+      <textarea id="adresse" [(ngModel)]="currentUser.adresse" name="adresse"></textarea>
+    </div>
+
+    <!-- Code Ville -->
+    <div class="form-group">
+      <label for="codeVille">Code Ville:</label>
+      <input type="text" id="codeVille" [(ngModel)]="currentUser.codeVille" name="codeVille" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="currentUser.email" name="email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="caution">Caution du compte:</label>
+      <input
+        type="number"
+        id="caution"
+        [(ngModel)]="currentUser.caution"
+        name="caution"
+        min="0"
+        required
+      />
+    </div>
+
+    <!-- Etudiant -->
+    <div *ngIf="userType === 'etudiant'" class="form-group">
+      <label for="anneeUniversitaire">Année Universitaire:</label>
+      <input
+        type="number"
+        id="anneeUniversitaire"
+        [(ngModel)]="etudiant.anneeUniversitaire"
+        name="anneeUniversitaire"
+      />
+    </div>
+
+    <!-- Enseignant -->
+    <div *ngIf="userType === 'enseignant'" class="form-group">
+      <label for="codeDepartement">Département:</label>
+      <select id="codeDepartement" [(ngModel)]="enseignant.codeDepartement" name="codeDepartement">
+        <option [ngValue]="null">Sélectionner un département</option>
+        <option *ngFor="let dept of departements" [ngValue]="dept.codeDepartement">
+          {{ dept.nomDepartement }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="loading" class="btn btn-success">
+        {{ loading ? 'Création en cours...' : "Créer l'utilisateur" }}
+      </button>
+
+      <button type="button" routerLink="/home" class="btn btn-secondary">Annuler</button>
+    </div>
+  </form>
+</div>
