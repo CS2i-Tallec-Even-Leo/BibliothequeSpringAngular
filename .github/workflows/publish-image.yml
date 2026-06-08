@@ -1,0 +1,51 @@
+name: Bibliothèque CI/CD - Publish Image
+
+on:
+  workflow_call:
+
+jobs:
+  publish-image:
+    name: Publish Docker Images
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io \
+            -u "${{ github.actor }}" \
+            --password-stdin
+
+      - name: Build and push backend image
+        run: |
+          BACKEND_IMAGE="${IMAGE_PREFIX}/backend:latest"
+
+          echo "Building and pushing ${BACKEND_IMAGE}..."
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -t "${BACKEND_IMAGE}" \
+            --push \
+            -f Bibliotheque\ Back/Bibliotheque/Dockerfile .
+
+      - name: Build and push frontend image
+        run: |
+          FRONTEND_IMAGE="${IMAGE_PREFIX}/frontend:latest"
+
+          echo "Building and pushing ${FRONTEND_IMAGE}..."
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -t "${FRONTEND_IMAGE}" \
+            --push \
+            -f Bibliotheque\ Front/Dockerfile .

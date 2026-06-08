@@ -8,31 +8,53 @@ jobs:
     name: Trivy Scan
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: read
+
+    env:
+      TRIVY_VERSION: 0.69.1
+      REGISTRY: ghcr.io
+      IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}
+
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
-      - name: Display Trivy version and login
+      - name: Login to GitHub Container Registry
         run: |
-          echo "Le scan sera fait avec $(docker run --rm aquasec/trivy:${TRIVY_VERSION:-0.69.1} version)"
-          echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io \
+            -u "${{ github.actor }}" \
+            --password-stdin
+
+      - name: Display Trivy version
+        run: |
+          echo "Le scan sera fait avec $(docker run --rm aquasec/trivy:${TRIVY_VERSION} version)"
 
       - name: Run Trivy scan on backend
         run: |
-          echo "Scanning backend image with Trivy..."
-          docker pull "$CI_REGISTRY_IMAGE/backend:latest"
+          BACKEND_IMAGE="${IMAGE_PREFIX}/backend:latest"
+
+          echo "Scanning ${BACKEND_IMAGE}..."
+          docker pull "${BACKEND_IMAGE}"
+
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            aquasec/trivy:${TRIVY_VERSION:-0.69.1} \
-            image --severity HIGH,CRITICAL \
-            "$CI_REGISTRY_IMAGE/backend:latest"
+            aquasec/trivy:${TRIVY_VERSION} \
+            image \
+            --severity HIGH,CRITICAL \
+            "${BACKEND_IMAGE}"
 
       - name: Run Trivy scan on frontend
         run: |
-          echo "Scanning frontend image with Trivy..."
-          docker pull "$CI_REGISTRY_IMAGE/frontend:latest"
+          FRONTEND_IMAGE="${IMAGE_PREFIX}/frontend:latest"
+
+          echo "Scanning ${FRONTEND_IMAGE}..."
+          docker pull "${FRONTEND_IMAGE}"
+
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            aquasec/trivy:${TRIVY_VERSION:-0.69.1} \
-            image --severity HIGH,CRITICAL \
-            "$CI_REGISTRY_IMAGE/frontend:latest"
+            aquasec/trivy:${TRIVY_VERSION} \
+            image \
+            --severity HIGH,CRITICAL \
+            "${FRONTEND_IMAGE}"
