@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  tests:
+    uses: ./.github/workflows/test.yml
+
+  documentation:
+    uses: ./.github/workflows/doc.yml
+    needs: tests
