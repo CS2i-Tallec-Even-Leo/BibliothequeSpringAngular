@@ -26,14 +26,14 @@ Cette commande démarre automatiquement:
 ### 3. Démarrage manuel si nécessaire
 
 ```bash
-cd "Bibliotheque Back/Bibliotheque"
+cd "Bibliotheque-Back/Bibliotheque"
 mvn spring-boot:run
 ```
 
 ### 4. Lancer le frontend (terminal 2)
 
 ```bash
-cd "Bibliotheque Front"
+cd "Bibliotheque-Front"
 npm start
 ```
 

@@ -4,7 +4,7 @@
   "description": "Tests end-to-end pour Bibliotheque Spring Angular",
   "scripts": {
     "start:backend": "start-backend.cmd",
-    "start:frontend": "npm --prefix \"../Bibliotheque Front\" start",
+    "start:frontend": "npm --prefix \"../Bibliotheque-Front\" start",
     "cy:open": "start-server-and-test start:backend http://localhost:8080 \"start-server-and-test start:frontend http://localhost:4200 cypress open\"",
     "cy:run": "start-server-and-test start:backend http://localhost:8080 \"start-server-and-test start:frontend http://localhost:4200 cypress run\"",
     "cy:run:chrome": "cypress run --browser chrome",

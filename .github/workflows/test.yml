@@ -22,7 +22,7 @@ jobs:
           java-version: "17"
 
       - name: Run backend tests
-        working-directory: Bibliotheque Back/Bibliotheque
+        working-directory: Bibliotheque-Back/Bibliotheque
         run: chmod +x mvnw && ./mvnw -B test
 
   frontend:
@@ -38,12 +38,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: Bibliotheque Front/package-lock.json
+          cache-dependency-path: Bibliotheque-Front/package-lock.json
 
       - name: Install frontend dependencies
-        working-directory: Bibliotheque Front
+        working-directory: Bibliotheque-Front
         run: npm ci
 
       - name: Run frontend tests
-        working-directory: Bibliotheque Front
+        working-directory: Bibliotheque-Front
         run: npm run test -- --watch=false

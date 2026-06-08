@@ -50,11 +50,11 @@ jobs:
           java-version: "17"
 
       - name: Build backend
-        working-directory: Bibliotheque Back/Bibliotheque
+        working-directory: Bibliotheque-Back/Bibliotheque
         run: chmod +x mvnw && ./mvnw -B package -DskipTests
 
       - name: Start backend & wait for readiness
-        working-directory: Bibliotheque Back/Bibliotheque
+        working-directory: Bibliotheque-Back/Bibliotheque
         run: |
           java -jar target/*.jar &
           echo $! > /tmp/backend.pid

@@ -48,14 +48,14 @@ Assurez-vous que le backend et le frontend s'exécutent :
 **Terminal 1 - Backend:**
 
 ```bash
-cd "Bibliotheque Back/Bibliotheque"
+cd "Bibliotheque-Back/Bibliotheque"
 mvn spring-boot:run
 ```
 
 **Terminal 2 - Frontend:**
 
 ```bash
-cd "Bibliotheque Front"
+cd "Bibliotheque-Front"
 npm start
 ```
 
@@ -237,7 +237,7 @@ describe("Nom de la fonctionnalité", () => {
 
 ### Problèmes de proxying
 
-Vérifiez que `Bibliotheque Front/proxy.conf.json` configure correctement le proxy vers l'API.
+Vérifiez que `Bibliotheque-Front/proxy.conf.json` configure correctement le proxy vers l'API.
 
 ## Documentation
 

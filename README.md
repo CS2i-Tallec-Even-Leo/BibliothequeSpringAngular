@@ -30,7 +30,7 @@ Lien vers le [Swagger](https://cs2i-tallec-even-leo.github.io/BibliothequeSpring
 Depuis la racine du workspace:
 
 ```bash
-cd "Bibliotheque Back/Bibliotheque"
+cd "Bibliotheque-Back/Bibliotheque"
 mvn spring-boot:run
 ```
 
@@ -41,7 +41,7 @@ Le backend demarre sur `http://localhost:8080`.
 Dans un second terminal:
 
 ```bash
-cd "Bibliotheque Front"
+cd "Bibliotheque-Front"
 npm install
 npm start
 ```
@@ -60,9 +60,9 @@ Le frontend demarre sur `http://localhost:4200`.
 
 ```text
 BibliothequeSpringAngular/
-|-- Bibliotheque Back/
+|-- Bibliotheque-Back/
 |   \-- Bibliotheque/        # API Spring Boot
-|-- Bibliotheque Front/      # Application Angular
+|-- Bibliotheque-Front/      # Application Angular
 |-- QUICK_START.md
 |-- API_INTEGRATION_SUMMARY.md
 |-- IMPLEMENTATION_SUMMARY.md
@@ -188,7 +188,7 @@ La plupart des endpoints CRUD supportent `GET`, `POST`, `PUT` et `DELETE`.
 ### Backend Commandes
 
 ```bash
-cd "Bibliotheque Back/Bibliotheque"
+cd "Bibliotheque-Back/Bibliotheque"
 mvn clean install
 mvn test
 mvn spring-boot:run
@@ -197,7 +197,7 @@ mvn spring-boot:run
 ### Frontend Commandes
 
 ```bash
-cd "Bibliotheque Front"
+cd "Bibliotheque-Front"
 npm install
 npm start
 npm run build
