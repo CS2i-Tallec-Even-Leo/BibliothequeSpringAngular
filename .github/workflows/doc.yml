@@ -41,7 +41,6 @@ jobs:
   # ──────────────────────────────────────────────
   build-swagger:
     name: Build Swagger
-    needs: [backend, frontend]
     runs-on: ubuntu-latest
     env:
       CI: true

@@ -11,4 +11,4 @@ jobs:
 
   documentation:
     uses: ./.github/workflows/doc.yml
-    needs: tests
+    needs: [tests]
