@@ -14,7 +14,7 @@ Pour l'architecture et le detail des choix techniques, voir les autres fichiers 
 ### 1. Lancer le backend
 
 ```bash
-cd "Bibliotheque Back/Bibliotheque"
+cd "Bibliotheque-Back/Bibliotheque"
 mvn spring-boot:run
 ```
 
@@ -23,7 +23,7 @@ Backend disponible sur `http://localhost:8080`.
 ### 2. Lancer le frontend
 
 ```bash
-cd "Bibliotheque Front"
+cd "Bibliotheque-Front"
 npm install
 npm start
 ```
