@@ -2,7 +2,6 @@ name: Bibliothèque CI/CD - Publish Image
 
 on:
   workflow_call:
-
 jobs:
   publish-image:
     name: Publish Docker Images
@@ -14,10 +13,14 @@ jobs:
 
     env:
       REGISTRY: ghcr.io
-      IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}
 
     steps:
       - uses: actions/checkout@v5
+
+      - name: Set owner to lowercase
+        id: owner
+        run: |
+          echo "value=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -30,22 +33,20 @@ jobs:
 
       - name: Build and push backend image
         run: |
-          BACKEND_IMAGE="${IMAGE_PREFIX}/backend:latest"
+          BACKEND_IMAGE="ghcr.io/${{ steps.owner.outputs.value }}/backend:latest"
 
-          echo "Building and pushing ${BACKEND_IMAGE}..."
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             -t "${BACKEND_IMAGE}" \
             --push \
-            -f Bibliotheque\ Back/Bibliotheque/Dockerfile .
+            -f "Bibliotheque Back/Bibliotheque/Dockerfile" .
 
       - name: Build and push frontend image
         run: |
-          FRONTEND_IMAGE="${IMAGE_PREFIX}/frontend:latest"
+          FRONTEND_IMAGE="ghcr.io/${{ steps.owner.outputs.value }}/frontend:latest"
 
-          echo "Building and pushing ${FRONTEND_IMAGE}..."
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             -t "${FRONTEND_IMAGE}" \
             --push \
-            -f Bibliotheque\ Front/Dockerfile .
+            -f "Bibliotheque Front/Dockerfile" .
