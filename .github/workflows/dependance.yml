@@ -1,0 +1,38 @@
+name: Bibliothèque CI/CD - Dépendances
+
+on:
+  workflow_call:
+
+jobs:
+  trivy-scan:
+    name: Trivy Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Display Trivy version and login
+        run: |
+          echo "Le scan sera fait avec $(docker run --rm aquasec/trivy:${TRIVY_VERSION:-0.69.1} version)"
+          echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+
+      - name: Run Trivy scan on backend
+        run: |
+          echo "Scanning backend image with Trivy..."
+          docker pull "$CI_REGISTRY_IMAGE/backend:latest"
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:${TRIVY_VERSION:-0.69.1} \
+            image --severity HIGH,CRITICAL \
+            "$CI_REGISTRY_IMAGE/backend:latest"
+
+      - name: Run Trivy scan on frontend
+        run: |
+          echo "Scanning frontend image with Trivy..."
+          docker pull "$CI_REGISTRY_IMAGE/frontend:latest"
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:${TRIVY_VERSION:-0.69.1} \
+            image --severity HIGH,CRITICAL \
+            "$CI_REGISTRY_IMAGE/frontend:latest"

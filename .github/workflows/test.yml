@@ -1,4 +1,4 @@
-name: Bibliothèque CI/CD
+name: Bibliothèque CI/CD - Tests
 
 on:
   workflow_call:

@@ -1,4 +1,4 @@
-name: CI
+name: Bibliothèque CI/CD
 
 on:
   push:
@@ -15,6 +15,9 @@ jobs:
   tests:
     uses: ./.github/workflows/test.yml
 
+  dependances:
+    uses: ./.github/workflows/dependance.yml
+    needs: [tests]
   documentation:
     uses: ./.github/workflows/doc.yml
     needs: [tests]
