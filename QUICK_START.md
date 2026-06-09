@@ -14,7 +14,9 @@ Pour l'architecture et le detail des choix techniques, voir les autres fichiers 
 ### 1. Lancer le backend
 
 ```bash
-cd "Bibliotheque-Back/Bibliotheque"
+cd BibliothequeSpringAngular/Bibliotheque-Back/Bibliotheque
+sudo apt install default-jre
+sudo apt install maven
 mvn spring-boot:run
 ```
 
@@ -23,7 +25,8 @@ Backend disponible sur `http://localhost:8080`.
 ### 2. Lancer le frontend
 
 ```bash
-cd "Bibliotheque-Front"
+cd ../../Bibliotheque-Front/
+sudo apt install nodejs npm -y
 npm install
 npm start
 ```

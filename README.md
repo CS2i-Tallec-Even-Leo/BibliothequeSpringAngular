@@ -30,18 +30,19 @@ Lien vers le [Swagger](https://cs2i-tallec-even-leo.github.io/BibliothequeSpring
 Depuis la racine du workspace:
 
 ```bash
-cd "Bibliotheque-Back/Bibliotheque"
+cd BibliothequeSpringAngular/Bibliotheque-Back/Bibliotheque
+sudo apt install default-jre
+sudo apt install maven
 mvn spring-boot:run
 ```
 
-Le backend demarre sur `http://localhost:8080`.
+Backend disponible sur `http://localhost:8080`.
 
 ### 2. Lancer le frontend
 
-Dans un second terminal:
-
 ```bash
-cd "Bibliotheque-Front"
+cd ../../Bibliotheque-Front/
+sudo apt install nodejs npm -y
 npm install
 npm start
 ```
