@@ -35,7 +35,7 @@ jobs:
           zensical build --clean
 
       - name: Verify site output
-        run: | # ← P6 : validation
+        run: |
           if [ ! -f site/index.html ]; then
             echo "::error::site/index.html introuvable — le build zensical a échoué"
             exit 1
@@ -46,7 +46,7 @@ jobs:
         with:
           name: docs-site
           path: site/
-          retention-days: 5 # ← P4
+          retention-days: 5
 
   # ════════════════════════════════════════════════
   # BUILD — Swagger / OpenAPI
@@ -54,21 +54,21 @@ jobs:
   build-swagger:
     name: Build Swagger
     runs-on: ubuntu-latest
-    timeout-minutes: 15 # ← P3 : timeout
+    timeout-minutes: 15
     env:
       CI: true
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # ← A3 : v4
+        uses: actions/checkout@v4
 
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
-          cache: maven # ← P1 : cache Maven
+          cache: maven
 
-      - name: Set up Node.js # ← A6 : version explicite
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -79,7 +79,7 @@ jobs:
 
       - name: Start backend & wait for readiness
         working-directory: Bibliotheque-Back/Bibliotheque
-        run: | # ← A4 + A5 : corrigés
+        run: |
           JAR=$(find target -maxdepth 1 -name '*.jar' ! -name '*-plain.jar' | head -1)
           if [ -z "$JAR" ]; then
             echo "::error::Aucun JAR trouvé dans target/"
@@ -129,7 +129,7 @@ jobs:
         with:
           name: swagger-ui
           path: swagger-ui/
-          retention-days: 5 # ← P4
+          retention-days: 5
 
   # ════════════════════════════════════════════════
   # DEPLOY — Fusion des deux sites sur GitHub Pages
@@ -138,7 +138,7 @@ jobs:
     name: Deploy to GitHub Pages
     needs: [build-docs, build-swagger]
     runs-on: ubuntu-latest
-    timeout-minutes: 10 # ← P3
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -155,8 +155,8 @@ jobs:
           name: swagger-ui
           path: site/swagger/
 
-      - name: Setup Pages # ← A2 : configure-pages ici uniquement
-        uses: actions/configure-pages@v4 # ← A3 : v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload merged site to Pages
         uses: actions/upload-pages-artifact@v3
