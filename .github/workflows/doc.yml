@@ -27,10 +27,11 @@ jobs:
         with:
           python-version: "3.x"
           cache: pip # ← P2 : cache pip
+          cache-dependency-path: docs/requirements.txt
 
-      - name: Install & build docs
+      - name: Install dependencies & build
         run: |
-          pip install zensical
+          pip install -r docs/requirements.txt
           zensical build --clean
 
       - name: Verify site output
