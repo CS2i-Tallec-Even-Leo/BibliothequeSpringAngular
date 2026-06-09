@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./Bibliotheque-Back/Bibliotheque
+      dockerfile: Dockerfile
+    container_name: bibliotheque-back
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: bibliotheque-front
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+    depends_on:
+      - backend
