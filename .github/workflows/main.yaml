@@ -13,8 +13,8 @@ permissions:
   packages: write
 
 jobs:
-  publish-image:
-    uses: ./.github/workflows/publish-image.yml
+  # publish-image:
+  #   uses: ./.github/workflows/publish-image.yml
   tests:
     uses: ./.github/workflows/test.yml
     needs: [publish-image]
