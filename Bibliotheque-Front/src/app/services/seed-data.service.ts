@@ -71,7 +71,7 @@ export class SeedDataService {
 tap(() =>
   console.log('[SEED] Departements/Villes OK, insertion auteurs/livres...')
 ),
-        switchMap((_result: SeedInitResult) =>
+        switchMap((_: SeedInitResult) =>
           forkJoin<SeedInsertResult>([
             this.apiService
               .createAuteur({ id: 0, nom: 'Hugo', prenom: 'Victor' })
