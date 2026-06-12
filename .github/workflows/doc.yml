@@ -45,7 +45,7 @@ jobs:
           fi
 
       - name: Upload docs artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docs-site
           path: site/
@@ -129,7 +129,7 @@ jobs:
           [ -f /tmp/backend.pid ] && kill "$(cat /tmp/backend.pid)" 2>/dev/null || true
 
       - name: Upload swagger artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: swagger-ui
           path: swagger-ui/
