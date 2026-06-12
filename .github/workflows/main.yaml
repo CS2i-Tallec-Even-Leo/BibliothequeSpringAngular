@@ -18,6 +18,9 @@ jobs:
   tests:
     uses: ./.github/workflows/test.yml
   #  needs: [publish-image]
+  lint:
+    uses: ./.github/workflows/lint.yml
+    needs: [tests]
   dependances:
     uses: ./.github/workflows/dependance.yml
     needs: [tests]

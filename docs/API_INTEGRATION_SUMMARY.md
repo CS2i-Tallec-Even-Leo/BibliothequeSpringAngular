@@ -91,6 +91,6 @@ Le frontend centralise les appels HTTP dans `src/app/services/api.ts`.
 
 ## A consulter ensuite
 
-- `QUICK_START.md` pour lancer le projet
+- `index.md` pour lancer le projet
 - `IMPLEMENTATION_SUMMARY.md` pour la synthese des changements
 - `MODIFICATIONS_CHECKLIST.md` pour le suivi detaille

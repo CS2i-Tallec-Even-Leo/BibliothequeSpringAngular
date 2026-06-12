@@ -64,7 +64,7 @@ BibliothequeSpringAngular/
 |-- Bibliotheque-Back/
 |   \-- Bibliotheque/        # API Spring Boot
 |-- Bibliotheque-Front/      # Application Angular
-|-- QUICK_START.md
+|-- index.md
 |-- API_INTEGRATION_SUMMARY.md
 |-- IMPLEMENTATION_SUMMARY.md
 \-- MODIFICATIONS_CHECKLIST.md
@@ -229,7 +229,7 @@ npm test
 
 ## Documentation du projet
 
-- `QUICK_START.md`: demarrage rapide
+- `index.md`: demarrage rapide
 - `API_INTEGRATION_SUMMARY.md`: details de l'integration front/back
 - `IMPLEMENTATION_SUMMARY.md`: synthese des evolutions implementees
 

@@ -63,7 +63,7 @@ Ce document resume ce qui a ete ajoute ou adapte dans le projet pour relier le f
 
 ## Documentation associee
 
-- `QUICK_START.md`: lancement local
+- `index.md`: lancement local
 - `API_INTEGRATION_SUMMARY.md`: details de communication
 - `MODIFICATIONS_CHECKLIST.md`: liste de verification
 
