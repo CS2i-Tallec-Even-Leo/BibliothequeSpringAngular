@@ -12,7 +12,7 @@ export default tseslint.config(
             sourceType: "module",
         },
         rules: {
-            "no-console": "warn",
+            "no-console": "off",
             "@typescript-eslint/no-unused-vars": "warn",
         },
     },
@@ -20,7 +20,7 @@ export default tseslint.config(
     {
         files: ["**/*.{js,mjs,cjs}"],
         rules: {
-            "no-console": "warn",
+            "no-console": "off",
             "no-unused-vars": "warn",
             "no-undef": "error",
         },
