@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: "17"
           distribution: "temurin"
@@ -23,7 +23,7 @@ jobs:
           ./mvnw checkstyle:check -Dcheckstyle.config.location=checkstyle.xml
 
       - name: Set up Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "24"
       - name: Lint Frontend with ESLint
