@@ -9,12 +9,6 @@ type HttpErrorLike = {
   error?: unknown;
 };
 
-type SeedInitResult = {
-  d1: unknown;
-  d2: unknown;
-  v1: unknown;
-  v2: unknown;
-};
 
 type SeedInsertResult = (unknown | null)[];
 
