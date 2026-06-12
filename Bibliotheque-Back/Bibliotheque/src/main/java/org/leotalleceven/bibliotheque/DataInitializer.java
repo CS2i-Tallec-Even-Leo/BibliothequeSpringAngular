@@ -147,23 +147,49 @@ public class DataInitializer implements CommandLineRunner {
         revueRepository.saveAll(revues);
 
         // Enseignants (hérite Particulier, SINGLE_TABLE, id primitif = 0 → persist)
-        Enseignant e1 = new Enseignant(0, "Dupont", "Marie", "10 rue de Rome, Paris", "75001", "marie.dupont@univ.local", 120, 1);
-        Enseignant e2 = new Enseignant(0, "Martin", "Luc", "5 avenue de Lyon, Lyon", "69001", "luc.martin@univ.local", 80, 2);
+        Enseignant e1 = new Enseignant(
+                0, "Dupont", "Marie",
+                "10 rue de Rome, Paris", "75001", "marie.dupont@univ.local",
+                120, 1
+        );
+        Enseignant e2 = new Enseignant(
+                0, "Martin", "Luc",
+                "5 avenue de Lyon, Lyon", "69001", "luc.martin@univ.local",
+                80, 2
+        );
         enseignantRepository.saveAll(List.of(e1, e2));
 
         // Etudiants (hérite Particulier, SINGLE_TABLE, id primitif = 0 → persist)
-        Etudiant et1 = new Etudiant(0, "Bernard", "Sophie", "23 rue des Fleurs, Paris", "75001", "sophie.bernard@etu.local", 60, 2026);
-        Etudiant et2 = new Etudiant(0, "Lopez", "Antoine", "42 bd de la Republique, Lyon", "69001", "antoine.lopez@etu.local", 50, 2025);
+        Etudiant et1 = new Etudiant(
+                0, "Bernard", "Sophie",
+                "23 rue des Fleurs, Paris", "75001", "sophie.bernard@etu.local",
+                60, 2026
+        );
+        Etudiant et2 = new Etudiant(
+                0, "Lopez", "Antoine",
+                "42 bd de la Republique, Lyon", "69001", "antoine.lopez@etu.local",
+                50, 2025
+        );
         etudiantRepository.saveAll(List.of(et1, et2));
 
         // Particuliers (id primitif = 0 → persist)
-        Particulier p1 = new Particulier(0, "Rouge", "Emma", "1 rue du Lac, Paris", "75001", "emma.rouge@mail.local", 40);
-        Particulier p2 = new Particulier(0, "Petit", "Jean", "14 place du Marche, Lyon", "69001", "jean.petit@mail.local", 35);
+        Particulier p1 = new Particulier(
+                0, "Rouge", "Emma",
+                "1 rue du Lac, Paris", "75001", "emma.rouge@mail.local",
+                40
+        );
+        Particulier p2 = new Particulier(
+                0, "Petit", "Jean",
+                "14 place du Marche, Lyon", "69001", "jean.petit@mail.local",
+                35
+        );
         particulierRepository.saveAll(List.of(p1, p2));
 
                 seedMissingExemplaires();
 
-        System.out.println("[SEED] Données initialisées avec succès : 10 livres, 3 revues, 3 auteurs, 2 enseignants, 2 étudiants, 2 particuliers.");
+        System.out.println(
+                "[SEED] Données initialisées avec succès : 10 livres, 3 revues, 3 auteurs, 2 enseignants, 2 étudiants, 2 particuliers."
+        );
     }
 
         private void seedMissingExemplaires() {
@@ -178,7 +204,11 @@ public class DataInitializer implements CommandLineRunner {
                 }
 
                 exemplaireRepository.saveAll(missingExemplaires);
-                System.out.println("[SEED] " + missingExemplaires.size() + " exemplaire(s) créé(s) pour compléter les ressources.");
+                System.out.println(
+                        "[SEED] " +
+                        missingExemplaires.size() +
+                        " exemplaire(s) créé(s) pour compléter les ressources."
+                );
         }
 
         private Exemplaire buildDefaultExemplaire(Ressource ressource) {

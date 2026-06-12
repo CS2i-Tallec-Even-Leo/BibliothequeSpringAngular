@@ -102,7 +102,9 @@ public class EmpruntController {
                         && e.getExemplaire().getRessource().getId().equals(ressourceId)
         );
         if (alreadyBorrowedSameRessource) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Un exemplaire de cette ressource est deja emprunte");
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Un exemplaire de cette ressource est deja emprunte"
+            );
         }
 
         int cautionRessource = exemplaire.getRessource() != null ? exemplaire.getRessource().getCaution() : 0;
@@ -124,8 +126,12 @@ public class EmpruntController {
         return repo.save(emprunt);
     }
 
-    public record EmpruntCreateRequest(LocalDate dateEmprunt, String statut, IdPayload particulier, IdPayload exemplaire) {
-    }
+    public record EmpruntCreateRequest(
+            LocalDate dateEmprunt,
+            String statut,
+            IdPayload particulier,
+            IdPayload exemplaire
+    ) { }
 
     public record IdPayload(Integer id) {
     }
@@ -159,7 +165,12 @@ public class EmpruntController {
                 message.setText(buildReminderBody(utilisateur.getNom(), emprunt));
                 mailSender.send(message);
             } else {
-                System.out.println("[MAIL-SIMULE] Vers " + utilisateur.getEmail() + " : " + buildReminderBody(utilisateur.getNom(), emprunt));
+                System.out.println(
+                        "[MAIL-SIMULE] Vers " +
+                        utilisateur.getEmail() +
+                        " : " +
+                        buildReminderBody(utilisateur.getNom(), emprunt)
+                );
             }
 
             notifiedCount++;
