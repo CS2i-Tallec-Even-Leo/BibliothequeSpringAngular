@@ -16,7 +16,15 @@ public class Livre extends Ressource {
         super();
     }
 
-    public Livre(String titre, int caution, String codeBarre, String iSBN, String auteur, String genre, Integer anneePublication) {
+    public Livre(
+            String titre,
+            int caution,
+            String codeBarre,
+            String iSBN,
+            String auteur,
+            String genre,
+            Integer anneePublication
+    ) {
         super(titre, caution, codeBarre);
         this.iSBN = iSBN;
         Auteur = auteur;

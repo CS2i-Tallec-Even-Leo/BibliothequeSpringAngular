@@ -11,7 +11,16 @@ public class Etudiant extends Particulier {
         super();
     }
 
-    public Etudiant(int id, String nom, String prenom, String adresse, String codeVille, String email, int caution, int anneeUniversitaire) {
+    public Etudiant(
+            int id,
+            String nom,
+            String prenom,
+            String adresse,
+            String codeVille,
+            String email,
+            int caution,
+            int anneeUniversitaire
+    ) {
         super(id, nom, prenom, adresse, codeVille, email, caution);
         this.anneeUniversitaire = anneeUniversitaire;
     }

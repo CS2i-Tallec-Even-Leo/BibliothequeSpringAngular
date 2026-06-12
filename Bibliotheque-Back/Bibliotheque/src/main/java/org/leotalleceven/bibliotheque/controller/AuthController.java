@@ -41,7 +41,9 @@ public class AuthController {
 
         Particulier utilisateur = particulierRepository
                 .findFirstByNomIgnoreCaseAndPrenomIgnoreCase(request.nom().trim(), request.prenom().trim())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Compte utilisateur introuvable"));
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Compte utilisateur introuvable")
+                );
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("id", utilisateur.getId());

@@ -67,8 +67,11 @@ public class EmpruntController {
 
     @PostMapping
     public Emprunt createEmprunt(@RequestBody EmpruntCreateRequest request) {
-        if (request == null || request.particulier() == null || request.particulier().id() == null || request.particulier().id() <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Utilisateur obligatoire");
+        if (request == null ||
+            request.particulier() == null ||
+            request.particulier().id() == null ||
+            request.particulier().id() <= 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Utilisateur obligatoire");
         }
         if (request.exemplaire() == null || request.exemplaire().id() == null || request.exemplaire().id() <= 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exemplaire obligatoire");

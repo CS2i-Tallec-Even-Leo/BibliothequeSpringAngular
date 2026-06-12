@@ -103,16 +103,36 @@ public class DataInitializer implements CommandLineRunner {
 
         // Livres (ID auto-généré via Ressource, héritage JOINED)
         List<Livre> livres = List.of(
-                new Livre("Les Miserables", 15, "000123456001", "978-2253005049", "Victor Hugo", "Roman", 1862),
-                new Livre("Notre-Dame de Paris", 13, "000123456002", "978-2253009634", "Victor Hugo", "Roman historique", 1831),
-                new Livre("L Etranger", 10, "000123456003", "978-2070360024", "Albert Camus", "Roman", 1942),
-                new Livre("La Peste", 10, "000123456004", "978-2070360315", "Albert Camus", "Roman", 1947),
-                new Livre("Germinal", 12, "000123456005", "978-2253006077", "Emile Zola", "Roman", 1885),
-                new Livre("Nana", 11, "000123456006", "978-2253004219", "Emile Zola", "Roman", 1880),
-                new Livre("Madame Bovary", 10, "000123456007", "978-2070413119", "Gustave Flaubert", "Roman", 1857),
-                new Livre("Le Pere Goriot", 11, "000123456008", "978-2253004257", "Honore de Balzac", "Roman", 1835),
-                new Livre("Candide", 8, "000123456009", "978-2070360352", "Voltaire", "Conte philosophique", 1759),
-                new Livre("Les Fleurs du Mal", 9, "000123456010", "978-2070411579", "Charles Baudelaire", "Poesie", 1857)
+                new Livre(
+                        "Les Miserables", 15, "000123456001",
+                        "978-2253005049", "Victor Hugo", "Roman", 1862),
+                new Livre(
+                        "Notre-Dame de Paris", 13, "000123456002",
+                        "978-2253009634", "Victor Hugo", "Roman historique", 1831),
+                new Livre(
+                        "L Etranger", 10, "000123456003",
+                        "978-2070360024", "Albert Camus", "Roman", 1942),
+                new Livre(
+                        "La Peste", 10, "000123456004",
+                        "978-2070360315", "Albert Camus", "Roman", 1947),
+                new Livre(
+                        "Germinal", 12, "000123456005",
+                        "978-2253006077", "Emile Zola", "Roman", 1885),
+                new Livre(
+                        "Nana", 11, "000123456006",
+                        "978-2253004219", "Emile Zola", "Roman", 1880),
+                new Livre(
+                        "Madame Bovary", 10, "000123456007",
+                        "978-2070413119", "Gustave Flaubert", "Roman", 1857),
+                new Livre(
+                        "Le Pere Goriot", 11, "000123456008",
+                        "978-2253004257", "Honore de Balzac", "Roman", 1835),
+                new Livre(
+                        "Candide", 8, "000123456009",
+                        "978-2070360352", "Voltaire", "Conte philosophique", 1759),
+                new Livre(
+                        "Les Fleurs du Mal", 9, "000123456010",
+                        "978-2070411579", "Charles Baudelaire", "Poesie", 1857)
         );
         livres.forEach(livre -> livre.setStockage(stockages.get(0)));
         livreRepository.saveAll(livres);
