@@ -1,22 +1,38 @@
-import { Injectable } from '@angular/core';
 import { ApiService } from './api';
-import { Departement } from '../model/User/Departement';
-import { Ville } from '../model/User/Ville';
-import { forkJoin, of, EMPTY } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+import { forkJoin, of, EMPTY } from 'rxjs';
+type HttpErrorLike = {
+  status?: number;
+  message?: string;
+  error?: unknown;
+};
 
 function logError(label: string) {
-  return catchError((err: any) => {
-    console.error(`[SEED] Erreur creation ${label}:`, err?.status, err?.message, err?.error);
+  return catchError((err: unknown) => {
+    const error = err as HttpErrorLike;
+
+    console.error(
+      `[SEED] Erreur creation ${label}:`,
+      error?.status,
+      error?.message,
+      error?.error
+    );
+
     return of(null);
   });
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+type SeedInitResult = {
+  d1: unknown;
+  d2: unknown;
+  v1: unknown;
+  v2: unknown;
+};
+
+type SeedInsertResult = (unknown | null)[];
+
 export class SeedDataService {
-  constructor(private apiService: ApiService) {}
+  constructor(private readonly apiService: ApiService) {}
 
   initialize(): void {
     this.apiService
@@ -26,39 +42,52 @@ export class SeedDataService {
           console.warn('Backend inaccessible, seed annule.');
           return EMPTY;
         }),
-        switchMap((livres) => {
+
+        switchMap((livres: unknown[]) => {
           if (livres.length > 0) {
             console.log('Donnees deja presentes, seed ignore.');
             return EMPTY;
           }
+
           console.log('[SEED] Base vide, insertion des donnees...');
+
           return forkJoin({
             d1: this.apiService
               .createDepartement({ codeDepartement: 1, nomDepartement: 'Informatique' })
               .pipe(logError('Departement Informatique')),
+
             d2: this.apiService
               .createDepartement({ codeDepartement: 2, nomDepartement: 'Lettres' })
               .pipe(logError('Departement Lettres')),
+
             v1: this.apiService
               .createVille({ codeVille: 75001, nomVille: 'Paris' })
               .pipe(logError('Ville Paris')),
+
             v2: this.apiService
               .createVille({ codeVille: 69001, nomVille: 'Lyon' })
               .pipe(logError('Ville Lyon')),
           });
         }),
-        tap(() => console.log('[SEED] Departements/Villes OK, insertion auteurs/livres...')),
-        switchMap((result) => {
+
+        tap(() =>
+          console.log('[SEED] Departements/Villes OK, insertion auteurs/livres...')
+        ),
+
+        switchMap((result: SeedInitResult) => {
           return forkJoin([
             this.apiService
               .createAuteur({ id: 0, nom: 'Hugo', prenom: 'Victor' })
               .pipe(logError('Auteur Hugo')),
+
             this.apiService
               .createAuteur({ id: 0, nom: 'Camus', prenom: 'Albert' })
               .pipe(logError('Auteur Camus')),
+
             this.apiService
               .createAuteur({ id: 0, nom: 'Zola', prenom: 'Emile' })
               .pipe(logError('Auteur Zola')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -70,6 +99,7 @@ export class SeedDataService {
                 genre: 'Roman',
               })
               .pipe(logError('Livre Les Miserables')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -81,6 +111,7 @@ export class SeedDataService {
                 genre: 'Roman historique',
               })
               .pipe(logError('Livre Notre-Dame de Paris')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -92,6 +123,7 @@ export class SeedDataService {
                 genre: 'Roman',
               })
               .pipe(logError('Livre L Etranger')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -103,6 +135,7 @@ export class SeedDataService {
                 genre: 'Roman',
               })
               .pipe(logError('Livre La Peste')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -114,6 +147,7 @@ export class SeedDataService {
                 genre: 'Roman',
               })
               .pipe(logError('Livre Germinal')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -125,6 +159,7 @@ export class SeedDataService {
                 genre: 'Roman',
               })
               .pipe(logError('Livre Nana')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -136,6 +171,7 @@ export class SeedDataService {
                 genre: 'Roman',
               })
               .pipe(logError('Livre Madame Bovary')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -147,6 +183,7 @@ export class SeedDataService {
                 genre: 'Roman',
               })
               .pipe(logError('Livre Le Pere Goriot')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -158,6 +195,7 @@ export class SeedDataService {
                 genre: 'Conte philosophique',
               })
               .pipe(logError('Livre Candide')),
+
             this.apiService
               .createLivre({
                 id: 0,
@@ -169,6 +207,7 @@ export class SeedDataService {
                 genre: 'Poesie',
               })
               .pipe(logError('Livre Les Fleurs du Mal')),
+
             this.apiService
               .createRevue({
                 id: 0,
@@ -178,6 +217,7 @@ export class SeedDataService {
                 numeroVolume: 1320,
               })
               .pipe(logError('Revue Sciences et Vie')),
+
             this.apiService
               .createRevue({
                 id: 0,
@@ -187,6 +227,7 @@ export class SeedDataService {
                 numeroVolume: 856,
               })
               .pipe(logError('Revue Le Monde Diplomatique')),
+
             this.apiService
               .createRevue({
                 id: 0,
@@ -196,6 +237,7 @@ export class SeedDataService {
                 numeroVolume: 580,
               })
               .pipe(logError('Revue Pour la Science')),
+
             this.apiService
               .createEnseignant({
                 id: 0,
@@ -207,6 +249,7 @@ export class SeedDataService {
                 codeDepartement: 1,
               })
               .pipe(logError('Enseignant Dupont')),
+
             this.apiService
               .createEnseignant({
                 id: 0,
@@ -218,6 +261,7 @@ export class SeedDataService {
                 codeDepartement: 2,
               })
               .pipe(logError('Enseignant Martin')),
+
             this.apiService
               .createEtudiant({
                 id: 0,
@@ -229,6 +273,7 @@ export class SeedDataService {
                 anneeUniversitaire: 2026,
               })
               .pipe(logError('Etudiant Bernard')),
+
             this.apiService
               .createEtudiant({
                 id: 0,
@@ -240,6 +285,7 @@ export class SeedDataService {
                 anneeUniversitaire: 2025,
               })
               .pipe(logError('Etudiant Lopez')),
+
             this.apiService
               .createParticulier({
                 id: 0,
@@ -250,6 +296,7 @@ export class SeedDataService {
                 caution: 0,
               })
               .pipe(logError('Particulier Rouge')),
+
             this.apiService
               .createParticulier({
                 id: 0,
@@ -262,17 +309,19 @@ export class SeedDataService {
               .pipe(logError('Particulier Petit')),
           ]);
         }),
-        catchError((err) => {
+
+        catchError((err: unknown) => {
           console.error('[SEED] Erreur globale:', err);
           return of(null);
-        }),
+        })
       )
-      .subscribe((results) => {
-        if (results) {
-          const ok = (results as any[]).filter((r) => r !== null).length;
-          const fail = (results as any[]).filter((r) => r === null).length;
-          console.log(`[SEED] Termine: ${ok} insertions reussies, ${fail} echecs.`);
-        }
+      .subscribe((results: SeedInsertResult | null) => {
+        if (!results) return;
+
+        const ok = results.filter(r => r !== null).length;
+        const fail = results.length - ok;
+
+        console.log(`[SEED] Termine: ${ok} insertions reussies, ${fail} echecs.`);
       });
   }
 }
