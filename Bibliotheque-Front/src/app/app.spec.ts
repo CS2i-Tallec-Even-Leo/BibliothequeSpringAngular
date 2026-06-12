@@ -17,6 +17,9 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-expect((
-  App as unknown as { title: () => string }).title()).toBe('Bibliotheque');
+  it('should expose app title', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    expect(app.title()).toBe('Bibliotheque');
+  });
 });

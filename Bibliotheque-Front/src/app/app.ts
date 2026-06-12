@@ -9,7 +9,7 @@ import { SeedDataService } from './services/seed-data.service';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  protected readonly title = signal('Bibliotheque');
+  readonly title = signal('Bibliotheque');
 
   constructor(private seedDataService: SeedDataService) {}
 
