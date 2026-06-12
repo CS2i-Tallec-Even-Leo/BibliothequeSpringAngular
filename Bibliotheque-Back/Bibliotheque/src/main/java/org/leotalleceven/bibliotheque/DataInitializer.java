@@ -73,6 +73,7 @@ public class DataInitializer implements CommandLineRunner {
                         System.out.println("[SEED] Données déjà présentes, seed principal ignoré.");
             return;
         }
+        final String ROMAN = "Roman";
 
         System.out.println("[SEED] Base vide, initialisation des données...");
 
@@ -96,7 +97,7 @@ public class DataInitializer implements CommandLineRunner {
         ));
 
         List<Stockage> stockages = stockageRepository.saveAll(List.of(
-                new Stockage(50, 50, 1, 1, 1, "Roman"),
+                new Stockage(50, 50, 1, 1, 1, ROMAN),
                 new Stockage(50, 50, 1, 2, 1, "Policier"),
                 new Stockage(30, 30, 2, 1, 2, "Revues")
         ));
@@ -105,28 +106,28 @@ public class DataInitializer implements CommandLineRunner {
         List<Livre> livres = List.of(
                 new Livre(
                         "Les Miserables", 15, "000123456001",
-                        "978-2253005049", "Victor Hugo", "Roman", 1862),
+                        "978-2253005049", "Victor Hugo", ROMAN, 1862),
                 new Livre(
                         "Notre-Dame de Paris", 13, "000123456002",
                         "978-2253009634", "Victor Hugo", "Roman historique", 1831),
                 new Livre(
                         "L Etranger", 10, "000123456003",
-                        "978-2070360024", "Albert Camus", "Roman", 1942),
+                        "978-2070360024", "Albert Camus", ROMAN, 1942),
                 new Livre(
                         "La Peste", 10, "000123456004",
-                        "978-2070360315", "Albert Camus", "Roman", 1947),
+                        "978-2070360315", "Albert Camus", ROMAN, 1947),
                 new Livre(
                         "Germinal", 12, "000123456005",
-                        "978-2253006077", "Emile Zola", "Roman", 1885),
+                        "978-2253006077", "Emile Zola", ROMAN, 1885),
                 new Livre(
                         "Nana", 11, "000123456006",
-                        "978-2253004219", "Emile Zola", "Roman", 1880),
+                        "978-2253004219", "Emile Zola", ROMAN, 1880),
                 new Livre(
                         "Madame Bovary", 10, "000123456007",
-                        "978-2070413119", "Gustave Flaubert", "Roman", 1857),
+                        "978-2070413119", "Gustave Flaubert", ROMAN, 1857),
                 new Livre(
                         "Le Pere Goriot", 11, "000123456008",
-                        "978-2253004257", "Honore de Balzac", "Roman", 1835),
+                        "978-2253004257", "Honore de Balzac", ROMAN, 1835),
                 new Livre(
                         "Candide", 8, "000123456009",
                         "978-2070360352", "Voltaire", "Conte philosophique", 1759),
@@ -188,7 +189,7 @@ public class DataInitializer implements CommandLineRunner {
                 seedMissingExemplaires();
 
         System.out.println(
-                """
+                """ 
                     [SEED] Données initialisées avec succès : 10 livres,
                      3 revues,
                      3 auteurs,

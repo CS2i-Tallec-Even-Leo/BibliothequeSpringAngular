@@ -32,4 +32,4 @@ jobs:
           cd Bibliotheque-Front
           npm ci
           npm i eslint
-          npm run lint
+          npx eslint --ext .ts,.tsx src/
