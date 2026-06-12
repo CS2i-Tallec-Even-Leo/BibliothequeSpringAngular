@@ -18,6 +18,9 @@ jobs:
     name: Build Docs (Zensical)
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CI: true
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,6 +60,7 @@ jobs:
     timeout-minutes: 15
     env:
       CI: true
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -139,6 +143,9 @@ jobs:
     needs: [build-docs, build-swagger]
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CI: true
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
