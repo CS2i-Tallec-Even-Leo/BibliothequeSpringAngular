@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ApiService } from '../services/api';
 import { forkJoin } from 'rxjs';
 
@@ -23,8 +23,8 @@ export class Home implements OnInit {
   error: string | null = null;
 
   constructor(
-    private apiService: ApiService,
-    private router: Router,
+    private readonly apiService: ApiService,
+    private readonly router: Router,
   ) {}
 
   ngOnInit(): void {

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // Models
-import { Bibliotequaire } from '../model/Bibliotequaire';
 import { Auteur } from '../model/Stock/Auteur';
 import { Livre } from '../model/Stock/Livre';
 import { Revue } from '../model/Stock/Revue';
@@ -20,9 +19,9 @@ import { Emprunt } from '../model/Emprunt';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = '/api';
+  private readonly apiUrl = '/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   // ============ AUTEURS ============
   getAuteurs(): Observable<Auteur[]> {
@@ -70,7 +69,7 @@ export class ApiService {
     if (filters.anneePublication) params.set('anneePublication', String(filters.anneePublication));
     if (filters.theme) params.set('theme', filters.theme);
     const query = params.toString();
-    return this.http.get<Livre[]>(`${this.apiUrl}/livres/recherche${query ? `?${query}` : ''}`);
+    return this.http.get<Livre[]>(`${this.apiUrl}/livres/recherche${query ? '?' + query : ''}`);
   }
 
   updateLivre(id: number, livre: Livre): Observable<Livre> {
