@@ -9,6 +9,8 @@ Pour l'architecture et le detail des choix techniques, voir les autres fichiers 
 - Maven
 - Node.js et npm
 
+Lien vers le [Swagger](https://cs2i-tallec-even-leo.github.io/BibliothequeSpringAngular/swagger/)
+
 ## Demarrage
 
 ### 1. Lancer le backend
