@@ -5,7 +5,7 @@ Pour l'architecture et le detail des choix techniques, voir les autres fichiers 
 
 ## Prerequis
 
-- Java 17+
+- Java 25+
 - Maven
 - Node.js et npm
 

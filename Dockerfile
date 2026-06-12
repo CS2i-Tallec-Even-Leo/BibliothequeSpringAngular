@@ -8,12 +8,11 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
+RUN ls -la
 # Ensure wrapper is executable (safe for CI)
-RUN chmod +x mvnw
-
+RUN chmod +x Bibliotheque-Back/Bibliotheque/mvnw
 # Build application
-RUN ./mvnw clean package -DskipTests
-
+RUN ./Bibliotheque-Back/Bibliotheque/mvnw clean package
 
 # =========================
 # RUNTIME
