@@ -188,7 +188,14 @@ public class DataInitializer implements CommandLineRunner {
                 seedMissingExemplaires();
 
         System.out.println(
-                "[SEED] Données initialisées avec succès : 10 livres, 3 revues, 3 auteurs, 2 enseignants, 2 étudiants, 2 particuliers."
+                """
+                    [SEED] Données initialisées avec succès : 10 livres,
+                     3 revues,
+                     3 auteurs,
+                     2 enseignants,
+                     2 étudiants,
+                     2 particuliers.
+                """
         );
     }
 
