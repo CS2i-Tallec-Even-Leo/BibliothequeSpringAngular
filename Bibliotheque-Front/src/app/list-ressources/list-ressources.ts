@@ -61,8 +61,8 @@ export class ListRessources implements OnInit {
   notifying = false;
 
   constructor(
-    private apiService: ApiService,
-    private router: Router,
+    private readonly apiService: ApiService,
+    private readonly router: Router,
   ) {}
 
   ngOnInit(): void {
