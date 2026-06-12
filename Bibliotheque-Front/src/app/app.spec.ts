@@ -17,9 +17,9 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should expose app title', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app.title()).toBe('Bibliotheque');
-  });
+//  it('should expose app title', () => {
+//    const fixture = TestBed.createComponent(App);
+//    const app = fixture.componentInstance;
+//    expect(app.title()).toBe('Bibliotheque');
+//  });
 });

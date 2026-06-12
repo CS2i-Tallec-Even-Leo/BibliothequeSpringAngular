@@ -9,9 +9,9 @@ import { SeedDataService } from './services/seed-data.service';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  readonly title = signal('Bibliotheque');
+  protected readonly title = signal('Bibliotheque');
 
-  constructor(private seedDataService: SeedDataService) {}
+  constructor(private readonly seedDataService: SeedDataService) {}
 
   ngOnInit(): void {
     this.seedDataService.initialize();
