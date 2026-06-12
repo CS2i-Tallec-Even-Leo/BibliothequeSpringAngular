@@ -26,10 +26,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-
       - name: Lint Frontend with ESLint
         run: |
           cd Bibliotheque-Front
           npm ci
           npm i eslint
-          npx eslint --ext .ts,.tsx src/
+          npx eslint "src/**/*.{ts,tsx}"
